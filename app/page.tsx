@@ -1,8 +1,29 @@
 import Image from "next/image";
 import Link from "next/link";
 import styles from "./page.module.css";
+import { jobs } from "../data/jobs";
 
-export default function Home() {
+export default async function Home({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
+  const resolvedSearchParams = await searchParams;
+  const currentPage = parseInt((resolvedSearchParams?.page as string) || "1", 10);
+  const jobsPerPage = 6;
+  
+  // Calculate pagination
+  const totalJobs = jobs.length;
+  const totalPages = Math.ceil(totalJobs / jobsPerPage);
+  
+  // Ensure valid page number
+  const safePage = Math.max(1, Math.min(currentPage, totalPages));
+  
+  // Slice jobs for current page
+  const startIndex = (safePage - 1) * jobsPerPage;
+  const endIndex = startIndex + jobsPerPage;
+  const currentJobs = jobs.slice(startIndex, endIndex);
+
   return (
     <>
       <section className={styles.heroSection}>
@@ -16,7 +37,7 @@ export default function Home() {
               The exclusive job board for CCA software engineering students. Find internships, entry-level positions, and connect with top tech companies looking for fresh talent.
             </p>
             <div className={styles.heroButtons}>
-              <Link href="#" className="btn-primary">
+              <Link href="#jobs-section" className="btn-primary">
                 Explore Jobs
               </Link>
               <Link href="#" className="btn-secondary">
@@ -51,6 +72,75 @@ export default function Home() {
               priority
             />
           </div>
+        </div>
+      </section>
+
+      <section id="jobs-section" className={`section ${styles.jobsSection}`}>
+        <div className="container">
+          <div className={styles.sectionHeader}>
+            <h2>Latest Opportunities</h2>
+            <p>Discover internships and entry-level roles tailored for you.</p>
+          </div>
+          
+          <div className={styles.jobsList}>
+            {currentJobs.map((job) => (
+              <div key={job.id} className={styles.jobCard}>
+                <div className={styles.jobCardHeader}>
+                  <div className={styles.jobCompanyLogo} style={{ backgroundColor: job.logoColor }}>
+                    {job.company.charAt(0)}
+                  </div>
+                  <div className={styles.jobBasicInfo}>
+                    <h3>{job.title}</h3>
+                    <p className={styles.jobCompany}>{job.company} &bull; {job.location}</p>
+                  </div>
+                </div>
+                
+                <div className={styles.jobTags}>
+                  <span className={styles.jobType}>{job.type}</span>
+                  {job.salaryRange && (
+                    <span className={styles.jobSalary}>{job.salaryRange}</span>
+                  )}
+                  {job.tags.slice(0, 2).map(tag => (
+                    <span key={tag} className={styles.jobTechTag}>{tag}</span>
+                  ))}
+                </div>
+                
+                <div className={styles.jobCardFooter}>
+                  <span className={styles.jobDate}>
+                    Posted {new Date(job.postedAt).toLocaleDateString()}
+                  </span>
+                  <Link href={`#`} className={styles.applyBtn}>
+                    View Details
+                  </Link>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Pagination Controls */}
+          {totalPages > 1 && (
+            <div className={styles.pagination}>
+              {safePage > 1 ? (
+                <Link href={`/?page=${safePage - 1}#jobs-section`} className={styles.pageBtn}>
+                  Previous
+                </Link>
+              ) : (
+                <span className={`${styles.pageBtn} ${styles.pageBtnDisabled}`}>Previous</span>
+              )}
+              
+              <div className={styles.pageInfo}>
+                Page {safePage} of {totalPages}
+              </div>
+              
+              {safePage < totalPages ? (
+                <Link href={`/?page=${safePage + 1}#jobs-section`} className={styles.pageBtn}>
+                  Next
+                </Link>
+              ) : (
+                <span className={`${styles.pageBtn} ${styles.pageBtnDisabled}`}>Next</span>
+              )}
+            </div>
+          )}
         </div>
       </section>
 
