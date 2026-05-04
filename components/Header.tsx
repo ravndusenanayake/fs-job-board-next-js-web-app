@@ -14,8 +14,6 @@ export default function Header() {
           <ul className={styles.navLinks}>
             <li><Link href="/">Home</Link></li>
             <li><Link href="/jobs">Find Jobs</Link></li>
-            <li><Link href="#">Companies</Link></li>
-            <li><Link href="#">Resources</Link></li>
           </ul>
         </nav>
         

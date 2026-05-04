@@ -19,51 +19,10 @@ export default function Footer() {
             </p>
           </div>
           
-          <div className={styles.linksCol}>
-            <h4 className={styles.colTitle}>For Students</h4>
-            <ul className={styles.linksList}>
-              <li><Link href="#">Browse Jobs</Link></li>
-              <li><Link href="#">Resume Review</Link></li>
-              <li><Link href="#">Interview Prep</Link></li>
-              <li><Link href="#">Career Events</Link></li>
-            </ul>
-          </div>
-          
-          <div className={styles.linksCol}>
-            <h4 className={styles.colTitle}>For Employers</h4>
-            <ul className={styles.linksList}>
-              <li><Link href="#">Post a Job</Link></li>
-              <li><Link href="#">Browse Candidates</Link></li>
-              <li><Link href="#">Pricing</Link></li>
-            </ul>
-          </div>
-          
-          <div className={styles.linksCol}>
-            <h4 className={styles.colTitle}>CCA</h4>
-            <ul className={styles.linksList}>
-              <li><Link href="#">About Us</Link></li>
-              <li><Link href="#">Contact</Link></li>
-              <li><Link href="#">Privacy Policy</Link></li>
-              <li><Link href="#">Terms of Service</Link></li>
-            </ul>
-          </div>
-          
         </div>
         
         <div className={styles.bottomBar}>
           <p>&copy; {currentYear} CCA Job Board. All rights reserved.</p>
-          <div className={styles.socialLinks}>
-            {/* Social icons placeholders */}
-            <Link href="#" aria-label="Twitter">
-              <div className={styles.socialIcon}></div>
-            </Link>
-            <Link href="#" aria-label="LinkedIn">
-              <div className={styles.socialIcon}></div>
-            </Link>
-            <Link href="#" aria-label="GitHub">
-              <div className={styles.socialIcon}></div>
-            </Link>
-          </div>
         </div>
       </div>
     </footer>
