@@ -1,0 +1,138 @@
+.jobsPageWrapper {
+  background-color: var(--background);
+  min-height: 100vh;
+}
+
+.pageHeader {
+  background-color: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 3rem 0;
+  margin-bottom: 3rem;
+  text-align: center;
+}
+
+.pageTitle {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+  color: var(--foreground);
+}
+
+.pageDescription {
+  font-size: 1.125rem;
+  color: var(--text-muted);
+}
+
+.mainLayout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  padding-bottom: 4rem;
+}
+
+@media (min-width: 1024px) {
+  .mainLayout {
+    grid-template-columns: 300px 1fr;
+    gap: 3rem;
+  }
+}
+
+.sidebar {
+  /* Positioning handled in JobFilters.module.css */
+}
+
+.resultsArea {
+  display: flex;
+  flex-direction: column;
+}
+
+.resultsHeader {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.resultsHeader h2 {
+  font-size: 1.25rem;
+  color: var(--foreground);
+}
+
+.jobsGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .jobsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.noResults {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  background-color: var(--surface);
+  border: 1px dashed var(--border);
+  border-radius: 1rem;
+  text-align: center;
+  gap: 1rem;
+}
+
+.noResultsIcon {
+  width: 4rem;
+  height: 4rem;
+  background-color: var(--border);
+  border-radius: 50%;
+  margin-bottom: 1rem;
+  opacity: 0.5;
+}
+
+.noResults h3 {
+  font-size: 1.25rem;
+  color: var(--foreground);
+}
+
+.noResults p {
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+
+/* Pagination */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 3rem;
+}
+
+.pageBtn {
+  padding: 0.5rem 1.25rem;
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--foreground);
+  font-weight: 500;
+  font-size: 0.95rem;
+  transition: background-color 0.2s ease;
+}
+
+.pageBtn:hover:not(.pageBtnDisabled) {
+  background-color: var(--surface-hover);
+  border-color: var(--text-muted);
+}
+
+.pageBtnDisabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.pageInfo {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}

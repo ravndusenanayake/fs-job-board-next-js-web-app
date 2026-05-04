@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import styles from "./page.module.css";
 import { jobs } from "../data/jobs";
+import JobCard from "../components/JobCard";
 
 export default async function Home({
   searchParams,
@@ -37,7 +38,7 @@ export default async function Home({
               The exclusive job board for CCA software engineering students. Find internships, entry-level positions, and connect with top tech companies looking for fresh talent.
             </p>
             <div className={styles.heroButtons}>
-              <Link href="#jobs-section" className="btn-primary">
+              <Link href="/jobs" className="btn-primary">
                 Explore Jobs
               </Link>
               <Link href="#" className="btn-secondary">
@@ -84,63 +85,16 @@ export default async function Home({
           
           <div className={styles.jobsList}>
             {currentJobs.map((job) => (
-              <div key={job.id} className={styles.jobCard}>
-                <div className={styles.jobCardHeader}>
-                  <div className={styles.jobCompanyLogo} style={{ backgroundColor: job.logoColor }}>
-                    {job.company.charAt(0)}
-                  </div>
-                  <div className={styles.jobBasicInfo}>
-                    <h3>{job.title}</h3>
-                    <p className={styles.jobCompany}>{job.company} &bull; {job.location}</p>
-                  </div>
-                </div>
-                
-                <div className={styles.jobTags}>
-                  <span className={styles.jobType}>{job.type}</span>
-                  {job.salaryRange && (
-                    <span className={styles.jobSalary}>{job.salaryRange}</span>
-                  )}
-                  {job.tags.slice(0, 2).map(tag => (
-                    <span key={tag} className={styles.jobTechTag}>{tag}</span>
-                  ))}
-                </div>
-                
-                <div className={styles.jobCardFooter}>
-                  <span className={styles.jobDate}>
-                    Posted {new Date(job.postedAt).toLocaleDateString()}
-                  </span>
-                  <Link href={`#`} className={styles.applyBtn}>
-                    View Details
-                  </Link>
-                </div>
-              </div>
+              <JobCard key={job.id} job={job} />
             ))}
           </div>
 
-          {/* Pagination Controls */}
-          {totalPages > 1 && (
-            <div className={styles.pagination}>
-              {safePage > 1 ? (
-                <Link href={`/?page=${safePage - 1}#jobs-section`} className={styles.pageBtn}>
-                  Previous
-                </Link>
-              ) : (
-                <span className={`${styles.pageBtn} ${styles.pageBtnDisabled}`}>Previous</span>
-              )}
-              
-              <div className={styles.pageInfo}>
-                Page {safePage} of {totalPages}
-              </div>
-              
-              {safePage < totalPages ? (
-                <Link href={`/?page=${safePage + 1}#jobs-section`} className={styles.pageBtn}>
-                  Next
-                </Link>
-              ) : (
-                <span className={`${styles.pageBtn} ${styles.pageBtnDisabled}`}>Next</span>
-              )}
-            </div>
-          )}
+          <div className={styles.viewAllWrapper}>
+             <Link href="/jobs" className="btn-secondary">
+                View All Jobs
+             </Link>
+          </div>
+
         </div>
       </section>
 

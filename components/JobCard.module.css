@@ -1,0 +1,112 @@
+.jobCard {
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  height: 100%;
+}
+
+.jobCard:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--primary-hover);
+}
+
+.jobCardHeader {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.jobCompanyLogo {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-family: var(--font-outfit);
+  font-weight: 700;
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+
+.jobBasicInfo h3 {
+  font-size: 1.125rem;
+  margin-bottom: 0.25rem;
+  color: var(--foreground);
+}
+
+.jobCompany {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+}
+
+.jobTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.jobTags span {
+  padding: 0.25rem 0.75rem;
+  border-radius: 1rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.jobType {
+  background-color: var(--primary-light);
+  color: var(--primary);
+}
+
+.jobSalary {
+  background-color: #f1f5f9;
+  color: #334155;
+  border: 1px solid #e2e8f0;
+}
+
+.jobTechTag {
+  background-color: var(--surface-hover);
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+}
+
+.jobCardFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+  margin-top: auto; /* Pushes footer to the bottom if container is taller */
+}
+
+.jobDate {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+}
+
+.applyBtn {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--primary);
+  transition: color 0.2s ease;
+}
+
+.applyBtn:hover {
+  color: var(--primary-hover);
+}
+
+/* For dark mode adjustments if needed, though variables handle most of it */
+@media (prefers-color-scheme: dark) {
+  .jobSalary {
+    background-color: #1e293b;
+    color: #cbd5e1;
+    border-color: #334155;
+  }
+}
