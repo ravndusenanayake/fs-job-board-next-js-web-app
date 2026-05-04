@@ -10,9 +10,27 @@ export interface Job {
   logoColor?: string;
 }
 
-export const jobs: Job[] = [
+const generateSlug = (title: string, company: string, existingSlugs: Set<string>): string => {
+  const baseSlug = `${title}-${company}`
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)/g, '');
+    
+  let slug = baseSlug;
+  let counter = 1;
+  
+  while (existingSlugs.has(slug)) {
+    slug = `${baseSlug}-${counter}`;
+    counter++;
+  }
+  
+  existingSlugs.add(slug);
+  return slug;
+};
+
+// Raw job data without IDs
+const rawJobs: Omit<Job, 'id'>[] = [
   {
-    id: "1",
     title: "Software Engineering Intern",
     company: "TechNova",
     location: "San Francisco, CA (Hybrid)",
@@ -23,7 +41,6 @@ export const jobs: Job[] = [
     logoColor: "#7c3aed"
   },
   {
-    id: "2",
     title: "Junior Frontend Developer",
     company: "PixelStream",
     location: "Remote",
@@ -34,7 +51,6 @@ export const jobs: Job[] = [
     logoColor: "#2563eb"
   },
   {
-    id: "3",
     title: "Backend Systems Engineer",
     company: "CloudFlare Core",
     location: "Austin, TX (On-site)",
@@ -45,7 +61,6 @@ export const jobs: Job[] = [
     logoColor: "#ea580c"
   },
   {
-    id: "4",
     title: "Data Science Intern",
     company: "Quantal AI",
     location: "Boston, MA (Hybrid)",
@@ -56,7 +71,6 @@ export const jobs: Job[] = [
     logoColor: "#16a34a"
   },
   {
-    id: "5",
     title: "Full Stack Developer - Entry Level",
     company: "WebSphere",
     location: "Seattle, WA (Remote)",
@@ -67,7 +81,6 @@ export const jobs: Job[] = [
     logoColor: "#c026d3"
   },
   {
-    id: "6",
     title: "Mobile App Developer",
     company: "Nomad Tech",
     location: "New York, NY (Hybrid)",
@@ -78,7 +91,6 @@ export const jobs: Job[] = [
     logoColor: "#0891b2"
   },
   {
-    id: "7",
     title: "DevOps Engineer (Junior)",
     company: "Infrastruct",
     location: "Remote",
@@ -89,7 +101,6 @@ export const jobs: Job[] = [
     logoColor: "#4f46e5"
   },
   {
-    id: "8",
     title: "QA Automation Engineer",
     company: "Testify",
     location: "Chicago, IL (On-site)",
@@ -100,7 +111,6 @@ export const jobs: Job[] = [
     logoColor: "#dc2626"
   },
   {
-    id: "9",
     title: "Cybersecurity Analyst Intern",
     company: "SecureNet",
     location: "Washington, DC (Hybrid)",
@@ -111,7 +121,6 @@ export const jobs: Job[] = [
     logoColor: "#059669"
   },
   {
-    id: "10",
     title: "Cloud Architecture Intern",
     company: "SkyHigh Computing",
     location: "Denver, CO (Remote)",
@@ -122,7 +131,6 @@ export const jobs: Job[] = [
     logoColor: "#0284c7"
   },
   {
-    id: "11",
     title: "Machine Learning Engineer",
     company: "BrainWave AI",
     location: "San Jose, CA (Hybrid)",
@@ -133,7 +141,6 @@ export const jobs: Job[] = [
     logoColor: "#e11d48"
   },
   {
-    id: "12",
     title: "Product Manager (Technical)",
     company: "BuildIt",
     location: "Remote",
@@ -144,7 +151,6 @@ export const jobs: Job[] = [
     logoColor: "#d97706"
   },
   {
-    id: "13",
     title: "Game Developer Intern",
     company: "Pixel Play",
     location: "Los Angeles, CA (On-site)",
@@ -155,7 +161,6 @@ export const jobs: Job[] = [
     logoColor: "#9333ea"
   },
   {
-    id: "14",
     title: "Site Reliability Engineer",
     company: "AlwaysOn",
     location: "Remote",
@@ -166,7 +171,6 @@ export const jobs: Job[] = [
     logoColor: "#334155"
   },
   {
-    id: "15",
     title: "UI/UX Developer",
     company: "Creative Logic",
     location: "Portland, OR (Hybrid)",
@@ -175,5 +179,23 @@ export const jobs: Job[] = [
     postedAt: "2026-05-02T09:45:00Z",
     tags: ["React", "CSS Animations", "Figma"],
     logoColor: "#db2777"
+  },
+  // Adding a duplicate to test the numbering logic
+  {
+    title: "Software Engineering Intern",
+    company: "TechNova",
+    location: "New York, NY (Remote)",
+    type: "Internship",
+    salaryRange: "$40 - $55 / hr",
+    postedAt: "2026-05-05T10:00:00Z",
+    tags: ["Python", "Django", "AWS"],
+    logoColor: "#7c3aed"
   }
 ];
+
+// Automatically generate safe, unique SEO-friendly IDs
+const existingSlugs = new Set<string>();
+export const jobs: Job[] = rawJobs.map(job => ({
+  ...job,
+  id: generateSlug(job.title, job.company, existingSlugs)
+}));
