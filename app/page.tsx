@@ -1,65 +1,105 @@
 import Image from "next/image";
+import Link from "next/link";
+import styles from "./page.module.css";
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
+    <>
+      <section className={styles.heroSection}>
+        <div className={`container ${styles.heroContainer}`}>
+          <div className={styles.heroContent}>
+            <div className={styles.pill}>Now open for 2026 graduates</div>
+            <h1 className={styles.heroTitle}>
+              Launch Your <span className="text-gradient">Software Career</span>
+            </h1>
+            <p className={styles.heroDescription}>
+              The exclusive job board for CCA software engineering students. Find internships, entry-level positions, and connect with top tech companies looking for fresh talent.
+            </p>
+            <div className={styles.heroButtons}>
+              <Link href="#" className="btn-primary">
+                Explore Jobs
+              </Link>
+              <Link href="#" className="btn-secondary">
+                Upload Resume
+              </Link>
+            </div>
+            
+            <div className={styles.stats}>
+              <div className={styles.statItem}>
+                <span className={styles.statNumber}>500+</span>
+                <span className={styles.statLabel}>Active Jobs</span>
+              </div>
+              <div className={styles.statItem}>
+                <span className={styles.statNumber}>120+</span>
+                <span className={styles.statLabel}>Partner Companies</span>
+              </div>
+              <div className={styles.statItem}>
+                <span className={styles.statNumber}>85%</span>
+                <span className={styles.statLabel}>Placement Rate</span>
+              </div>
+            </div>
+          </div>
+          
+          <div className={styles.heroImageWrapper}>
+            <div className={styles.heroImageBg}></div>
+            <Image 
+              src="/hero_graphic.png" 
+              alt="Abstract illustration of software development career growth" 
+              width={600} 
+              height={500} 
+              className={styles.heroImage}
+              priority
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+          </div>
         </div>
-      </main>
-    </div>
+      </section>
+
+      <section className={`section ${styles.featuresSection}`}>
+        <div className="container">
+          <div className={styles.sectionHeader}>
+            <h2>Why Use CCA Job Board?</h2>
+            <p>Designed specifically for software students, providing the tools you need to stand out.</p>
+          </div>
+          
+          <div className={styles.featuresGrid}>
+            <div className={styles.featureCard}>
+              <div className={styles.featureIconWrapper}>
+                <div className={styles.featureIcon}></div>
+              </div>
+              <h3>Curated Opportunities</h3>
+              <p>Every job posted is vetted and specifically targeted towards students and recent grads. No more filtering through senior roles.</p>
+            </div>
+            
+            <div className={styles.featureCard}>
+              <div className={styles.featureIconWrapper}>
+                <div className={styles.featureIcon}></div>
+              </div>
+              <h3>Direct Company Access</h3>
+              <p>Our partner companies are actively looking for CCA talent. Apply directly and skip the general applicant tracking systems.</p>
+            </div>
+            
+            <div className={styles.featureCard}>
+              <div className={styles.featureIconWrapper}>
+                <div className={styles.featureIcon}></div>
+              </div>
+              <h3>Portfolio Integration</h3>
+              <p>Showcase your GitHub projects, personal website, and coding skills in a unified profile designed for tech recruiters.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      <section className={`section ${styles.ctaSection}`}>
+        <div className="container">
+          <div className={styles.ctaBox}>
+            <h2>Ready to start your journey?</h2>
+            <p>Join hundreds of students who have already found their dream roles.</p>
+            <Link href="#" className={styles.ctaButton}>
+              Create Your Profile
+            </Link>
+          </div>
+        </div>
+      </section>
+    </>
   );
 }
