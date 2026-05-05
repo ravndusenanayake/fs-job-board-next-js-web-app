@@ -1,0 +1,71 @@
+datasource db {
+  provider = "postgresql"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// -------------------------------------------------------------
+// RECRUITER MODEL
+// -------------------------------------------------------------
+model Recruiter {
+  id                 String   @id @default(uuid())
+  name               String   // Recruiter's personal name
+  email              String   @unique
+  
+  // Company Details
+  companyName        String
+  companyDescription String?
+  companyLogoColor   String?  // Replaces the logoColor on the individual job
+  
+  createdAt          DateTime @default(now())
+  
+  // A recruiter can post multiple jobs
+  jobs               Job[]
+
+  @@map("recruiters")
+}
+
+// -------------------------------------------------------------
+// JOB MODEL
+// -------------------------------------------------------------
+model Job {
+  id            String        @id // Using the existing SEO-friendly slugs
+  title         String
+  location      String
+  type          String        // e.g., "Full-time", "Internship", etc.
+  salaryRange   String?
+  postedAt      DateTime      @default(now())
+  tags          String[]      // PostgreSQL supports string arrays
+  
+  // Relation back to the Recruiter
+  recruiterId   String
+  recruiter     Recruiter     @relation(fields: [recruiterId], references: [id], onDelete: Cascade)
+  
+  // Relation to applications
+  applications  Application[]
+
+  @@map("jobs")
+}
+
+// -------------------------------------------------------------
+// APPLICATION MODEL
+// -------------------------------------------------------------
+model Application {
+  id            String   @id @default(uuid())
+  
+  // Foreign Key to the Job model
+  jobId         String
+  job           Job      @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  
+  // Applicant details from the Apply Modal
+  name          String
+  email         String
+  portfolioUrl  String?
+  coverLetter   String?
+  
+  createdAt     DateTime @default(now())
+
+  @@map("applications")
+}
