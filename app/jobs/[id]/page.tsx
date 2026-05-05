@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import ApplyButton from "../../../components/ApplyButton";
 import { getJobById } from "../../../lib/jobs";
 import styles from "./page.module.css";
 
@@ -55,7 +56,7 @@ export default async function JobDetailsPage({
             </div>
             
             <div className={styles.headerActions}>
-              <button className="btn-primary">Apply Now</button>
+              <ApplyButton jobId={job.id} jobTitle={job.title}>Apply Now</ApplyButton>
               <button className="btn-secondary">Save Job</button>
             </div>
           </div>
@@ -88,7 +89,7 @@ export default async function JobDetailsPage({
           </section>
           
           <div className={styles.bottomActions}>
-             <button className="btn-primary">Apply for this position</button>
+             <ApplyButton jobId={job.id} jobTitle={job.title}>Apply for this position</ApplyButton>
           </div>
         </div>
 
