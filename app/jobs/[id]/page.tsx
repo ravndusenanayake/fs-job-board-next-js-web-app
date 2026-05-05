@@ -17,7 +17,7 @@ export default async function JobDetailsPage({
   }
 
   // Placeholder content for demonstration since our data file only has basic metadata
-  const aboutCompany = `At ${job.company}, we are driven by innovation and our passion for building products that matter. We believe in empowering our teams to take ownership and solve complex problems in a collaborative environment. Join us to make a real impact.`;
+  const aboutCompany = job.recruiter.companyDescription || `At ${job.recruiter.companyName}, we are driven by innovation and our passion for building products that matter. We believe in empowering our teams to take ownership and solve complex problems in a collaborative environment. Join us to make a real impact.`;
   
   const description = `We are looking for a passionate ${job.title} to join our growing team in ${job.location}. In this role, you will work closely with cross-functional teams to design, develop, and deliver high-quality software solutions. You will have the opportunity to work with modern technologies and directly contribute to the success of our core products.`;
   
@@ -38,12 +38,12 @@ export default async function JobDetailsPage({
           </Link>
           
           <div className={styles.headerContent}>
-            <div className={styles.companyLogoLarge} style={{ backgroundColor: job.logoColor || '#7c3aed' }}>
-              {job.company.charAt(0)}
+            <div className={styles.companyLogoLarge} style={{ backgroundColor: job.recruiter.companyLogoColor || '#7c3aed' }}>
+              {job.recruiter.companyName.charAt(0)}
             </div>
             <div className={styles.headerInfo}>
               <h1 className={styles.jobTitle}>{job.title}</h1>
-              <p className={styles.companyName}>{job.company}</p>
+              <p className={styles.companyName}>{job.recruiter.companyName}</p>
               
               <div className={styles.metaTags}>
                 <span className={styles.tag}><span className={styles.iconLocation}></span> {job.location}</span>
@@ -96,10 +96,10 @@ export default async function JobDetailsPage({
         <aside className={styles.sidebar}>
           <div className={styles.companyCard}>
             <div className={styles.companyCardHeader}>
-              <div className={styles.companyLogoSmall} style={{ backgroundColor: job.logoColor || '#7c3aed' }}>
-                {job.company.charAt(0)}
+              <div className={styles.companyLogoSmall} style={{ backgroundColor: job.recruiter.companyLogoColor || '#7c3aed' }}>
+                {job.recruiter.companyName.charAt(0)}
               </div>
-              <h3>{job.company}</h3>
+              <h3>{job.recruiter.companyName}</h3>
             </div>
             <p className={styles.companyDescription}>
               {aboutCompany}

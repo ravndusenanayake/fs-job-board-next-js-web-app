@@ -1,4 +1,4 @@
-import { jobs, Job } from "../data/jobs";
+import prisma from "./prisma";
 
 export interface GetJobsOptions {
   query?: string;
@@ -9,18 +9,7 @@ export interface GetJobsOptions {
   limit?: number;
 }
 
-export interface PaginatedJobs {
-  jobs: Job[];
-  total: number;
-  page: number;
-  limit: number;
-  totalPages: number;
-}
-
-export async function getJobs(options: GetJobsOptions = {}): Promise<PaginatedJobs> {
-  // Simulate network delay for realism if desired, but keeping it fast for now
-  // await new Promise(resolve => setTimeout(resolve, 100));
-
+export async function getJobs(options: GetJobsOptions = {}) {
   const {
     query = "",
     type = "",
@@ -30,45 +19,45 @@ export async function getJobs(options: GetJobsOptions = {}): Promise<PaginatedJo
     limit = 10,
   } = options;
 
-  let filteredJobs = jobs;
+  const where: any = {};
 
   if (query) {
-    const lowerQuery = query.toLowerCase();
-    filteredJobs = filteredJobs.filter(
-      (job) =>
-        job.title.toLowerCase().includes(lowerQuery) ||
-        job.company.toLowerCase().includes(lowerQuery)
-    );
+    where.OR = [
+      { title: { contains: query, mode: "insensitive" } },
+      { recruiter: { companyName: { contains: query, mode: "insensitive" } } },
+    ];
   }
 
   if (type) {
-    filteredJobs = filteredJobs.filter((job) => job.type === type);
+    where.type = type;
   }
 
   if (locationType) {
-    // If the data provides exact strings (like from a dropdown), exact match or includes works.
-    filteredJobs = filteredJobs.filter((job) =>
-      job.location.toLowerCase().includes(locationType.toLowerCase())
-    );
+    where.location = { contains: locationType, mode: "insensitive" };
   }
 
   if (skill) {
-    const lowerSkill = skill.toLowerCase();
-    filteredJobs = filteredJobs.filter((job) =>
-      job.tags.some((tag) => tag.toLowerCase().includes(lowerSkill))
-    );
+    where.tags = { has: skill };
   }
 
-  const total = filteredJobs.length;
+  const total = await prisma.job.count({ where });
   const totalPages = Math.ceil(total / limit) || 1;
   const safePage = Math.max(1, Math.min(page, totalPages));
 
-  const startIndex = (safePage - 1) * limit;
-  const endIndex = startIndex + limit;
-  const paginatedJobs = filteredJobs.slice(startIndex, endIndex);
+  const skip = (safePage - 1) * limit;
+
+  const jobs = await prisma.job.findMany({
+    where,
+    skip,
+    take: limit,
+    orderBy: { postedAt: "desc" },
+    include: {
+      recruiter: true,
+    },
+  });
 
   return {
-    jobs: paginatedJobs,
+    jobs,
     total,
     page: safePage,
     limit,
@@ -76,12 +65,25 @@ export async function getJobs(options: GetJobsOptions = {}): Promise<PaginatedJo
   };
 }
 
-export async function getJobById(id: string): Promise<Job | null> {
-  const job = jobs.find((j) => j.id === id);
-  return job || null;
+export async function getJobById(id: string) {
+  const job = await prisma.job.findUnique({
+    where: { id },
+    include: {
+      recruiter: true,
+    },
+  });
+  return job;
 }
 
-export async function getUniqueLocations(): Promise<string[]> {
-  const allLocations = Array.from(new Set(jobs.map((job) => job.location))).sort();
-  return allLocations;
+export async function getUniqueLocations() {
+  const locations = await prisma.job.findMany({
+    distinct: ["location"],
+    select: {
+      location: true,
+    },
+    orderBy: {
+      location: "asc",
+    },
+  });
+  return locations.map((l) => l.location);
 }

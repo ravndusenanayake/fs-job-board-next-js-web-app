@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import prisma from '../../../lib/prisma';
 
 export async function POST(request: Request) {
   try {
@@ -23,22 +24,19 @@ export async function POST(request: Request) {
       );
     }
 
-    // Simulate backend processing time (e.g. database insert, sending email)
-    await new Promise(resolve => setTimeout(resolve, 1500));
-
-    // Here you would typically save the application to your database
-    // console.log("New application received:", { jobId, name, email, portfolioUrl, coverLetter });
-
-    // For demonstration, let's pretend if email is 'error@example.com', we throw an error
-    if (email === 'error@example.com') {
-      return NextResponse.json(
-        { message: 'Database constraint failed. Please try again later.' },
-        { status: 500 }
-      );
-    }
+    // Save the application to the database
+    const application = await prisma.application.create({
+      data: {
+        jobId,
+        name,
+        email,
+        portfolioUrl: portfolioUrl || null,
+        coverLetter: coverLetter || null,
+      }
+    });
 
     return NextResponse.json(
-      { message: 'Application submitted successfully' },
+      { message: 'Application submitted successfully', applicationId: application.id },
       { status: 200 }
     );
     

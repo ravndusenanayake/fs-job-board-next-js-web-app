@@ -1,21 +1,25 @@
 import Link from 'next/link';
 import styles from './JobCard.module.css';
-import { Job } from '../data/jobs';
+import { Prisma } from '@prisma/client';
+
+type JobWithRecruiter = Prisma.JobGetPayload<{
+  include: { recruiter: true }
+}>;
 
 interface JobCardProps {
-  job: Job;
+  job: JobWithRecruiter;
 }
 
 export default function JobCard({ job }: JobCardProps) {
   return (
     <div className={styles.jobCard}>
       <div className={styles.jobCardHeader}>
-        <div className={styles.jobCompanyLogo} style={{ backgroundColor: job.logoColor || '#7c3aed' }}>
-          {job.company.charAt(0)}
+        <div className={styles.jobCompanyLogo} style={{ backgroundColor: job.recruiter.companyLogoColor || '#7c3aed' }}>
+          {job.recruiter.companyName.charAt(0)}
         </div>
         <div className={styles.jobBasicInfo}>
           <h3>{job.title}</h3>
-          <p className={styles.jobCompany}>{job.company} &bull; {job.location}</p>
+          <p className={styles.jobCompany}>{job.recruiter.companyName} &bull; {job.location}</p>
         </div>
       </div>
       
