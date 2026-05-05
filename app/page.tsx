@@ -1,29 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
 import styles from "./page.module.css";
-import { jobs } from "../data/jobs";
+import { getJobs } from "../lib/jobs";
 import JobCard from "../components/JobCard";
 
-export default async function Home({
-  searchParams,
-}: {
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
-}) {
-  const resolvedSearchParams = await searchParams;
-  const currentPage = parseInt((resolvedSearchParams?.page as string) || "1", 10);
-  const jobsPerPage = 6;
-  
-  // Calculate pagination
-  const totalJobs = jobs.length;
-  const totalPages = Math.ceil(totalJobs / jobsPerPage);
-  
-  // Ensure valid page number
-  const safePage = Math.max(1, Math.min(currentPage, totalPages));
-  
-  // Slice jobs for current page
-  const startIndex = (safePage - 1) * jobsPerPage;
-  const endIndex = startIndex + jobsPerPage;
-  const currentJobs = jobs.slice(startIndex, endIndex);
+export default async function Home() {
+  // Fetch latest 6 jobs for the homepage
+  const { jobs: currentJobs } = await getJobs({ page: 1, limit: 6 });
 
   return (
     <>

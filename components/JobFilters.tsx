@@ -3,7 +3,6 @@
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useCallback, useState, useRef, useEffect } from 'react';
 import styles from './JobFilters.module.css';
-import { jobs } from '../data/jobs';
 
 export default function JobFilters() {
   const router = useRouter();
@@ -18,9 +17,29 @@ export default function JobFilters() {
   const [isLocationOpen, setIsLocationOpen] = useState(false);
   const [locationSearch, setLocationSearch] = useState('');
   const locationRef = useRef<HTMLDivElement>(null);
+  
+  // Dynamic Locations State
+  const [allLocations, setAllLocations] = useState<string[]>([]);
+  const [isLoadingLocations, setIsLoadingLocations] = useState(true);
 
-  // Extract unique locations from jobs data
-  const allLocations = Array.from(new Set(jobs.map(job => job.location))).sort();
+  // Fetch unique locations from API
+  useEffect(() => {
+    async function fetchLocations() {
+      try {
+        const res = await fetch('/api/locations');
+        if (res.ok) {
+          const data = await res.json();
+          setAllLocations(data);
+        }
+      } catch (error) {
+        console.error('Failed to fetch locations', error);
+      } finally {
+        setIsLoadingLocations(false);
+      }
+    }
+    fetchLocations();
+  }, []);
+
   // Separate 'Remote' from the rest
   const remoteLocation = allLocations.find(loc => loc.toLowerCase() === 'remote');
   const otherLocations = allLocations.filter(loc => loc.toLowerCase() !== 'remote');
@@ -95,9 +114,9 @@ export default function JobFilters() {
         <div className={styles.customDropdown}>
           <div 
             className={`${styles.dropdownTrigger} ${isLocationOpen ? styles.open : ''}`}
-            onClick={() => setIsLocationOpen(!isLocationOpen)}
+            onClick={() => !isLoadingLocations && setIsLocationOpen(!isLocationOpen)}
           >
-            <span>{locationType || 'Any Location'}</span>
+            <span>{isLoadingLocations ? 'Loading...' : (locationType || 'Any Location')}</span>
             <span className={styles.dropdownArrow}>▼</span>
           </div>
           

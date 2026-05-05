@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { jobs } from "../../../data/jobs";
+import { getJobById } from "../../../lib/jobs";
 import styles from "./page.module.css";
 
 export default async function JobDetailsPage({
@@ -9,7 +9,7 @@ export default async function JobDetailsPage({
   params: Promise<{ id: string }>;
 }) {
   const resolvedParams = await params;
-  const job = jobs.find((j) => j.id === resolvedParams.id);
+  const job = await getJobById(resolvedParams.id);
 
   if (!job) {
     notFound();

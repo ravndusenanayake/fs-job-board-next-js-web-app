@@ -1,6 +1,6 @@
 import Link from "next/link";
 import styles from "./page.module.css";
-import { jobs } from "../../data/jobs";
+import { getJobs } from "../../lib/jobs";
 import JobCard from "../../components/JobCard";
 import JobFilters from "../../components/JobFilters";
 
@@ -12,53 +12,31 @@ export default async function JobsPage({
   const resolvedSearchParams = await searchParams;
   
   // Extract search params
-  const query = (resolvedSearchParams?.query as string)?.toLowerCase() || "";
+  const query = (resolvedSearchParams?.query as string) || "";
   const type = (resolvedSearchParams?.type as string) || "";
   const locationType = (resolvedSearchParams?.locationType as string) || "";
-  const skill = (resolvedSearchParams?.skill as string)?.toLowerCase() || "";
+  const skill = (resolvedSearchParams?.skill as string) || "";
+  const page = parseInt((resolvedSearchParams?.page as string) || "1", 10);
+  const limit = 8;
   
-  // Filter jobs
-  const filteredJobs = jobs.filter((job) => {
-    // Search query matching (title or company)
-    const matchesQuery = query 
-      ? job.title.toLowerCase().includes(query) || job.company.toLowerCase().includes(query)
-      : true;
-      
-    // Type matching
-    const matchesType = type ? job.type === type : true;
-    
-    // Location matching (simple substring match since we have hybrid/remote/on-site in the string)
-    const matchesLocation = locationType 
-      ? job.location.toLowerCase().includes(locationType.toLowerCase()) 
-      : true;
-      
-    // Skill matching
-    const matchesSkill = skill 
-      ? job.tags.some(tag => tag.toLowerCase().includes(skill))
-      : true;
-      
-    return matchesQuery && matchesType && matchesLocation && matchesSkill;
+  // Use data access layer
+  const { jobs: currentJobs, total: totalJobs, totalPages, page: safePage } = await getJobs({
+    query,
+    type,
+    locationType,
+    skill,
+    page,
+    limit
   });
 
-  // Pagination logic
-  const currentPage = parseInt((resolvedSearchParams?.page as string) || "1", 10);
-  const jobsPerPage = 8;
-  const totalJobs = filteredJobs.length;
-  const totalPages = Math.ceil(totalJobs / jobsPerPage) || 1;
-  const safePage = Math.max(1, Math.min(currentPage, totalPages));
-  
-  const startIndex = (safePage - 1) * jobsPerPage;
-  const endIndex = startIndex + jobsPerPage;
-  const currentJobs = filteredJobs.slice(startIndex, endIndex);
-
   // Preserve existing filters for pagination links
-  const createPaginationUrl = (page: number) => {
+  const createPaginationUrl = (pageNum: number) => {
     const params = new URLSearchParams();
     if (query) params.set('query', query);
     if (type) params.set('type', type);
     if (locationType) params.set('locationType', locationType);
     if (skill) params.set('skill', skill);
-    params.set('page', page.toString());
+    params.set('page', pageNum.toString());
     return `/jobs?${params.toString()}`;
   };
 
