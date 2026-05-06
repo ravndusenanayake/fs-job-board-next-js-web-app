@@ -18,9 +18,9 @@ export default async function JobDetailsPage({
 
   // Placeholder content for demonstration since our data file only has basic metadata
   const aboutCompany = job.recruiter.companyDescription || `At ${job.recruiter.companyName}, we are driven by innovation and our passion for building products that matter. We believe in empowering our teams to take ownership and solve complex problems in a collaborative environment. Join us to make a real impact.`;
-  
+
   const description = `We are looking for a passionate ${job.title} to join our growing team in ${job.location}. In this role, you will work closely with cross-functional teams to design, develop, and deliver high-quality software solutions. You will have the opportunity to work with modern technologies and directly contribute to the success of our core products.`;
-  
+
   const responsibilities = [
     "Collaborate with engineers, designers, and product managers to ship new features.",
     "Write clean, maintainable, and efficient code.",
@@ -36,7 +36,7 @@ export default async function JobDetailsPage({
           <Link href="/jobs" className={styles.backLink}>
             &larr; Back to Jobs
           </Link>
-          
+
           <div className={styles.headerContent}>
             <div className={styles.companyLogoLarge} style={{ backgroundColor: job.recruiter.companyLogoColor || '#7c3aed' }}>
               {job.recruiter.companyName.charAt(0)}
@@ -44,7 +44,7 @@ export default async function JobDetailsPage({
             <div className={styles.headerInfo}>
               <h1 className={styles.jobTitle}>{job.title}</h1>
               <p className={styles.companyName}>{job.recruiter.companyName}</p>
-              
+
               <div className={styles.metaTags}>
                 <span className={styles.tag}><span className={styles.iconLocation}></span> {job.location}</span>
                 <span className={styles.tag}><span className={styles.iconType}></span> {job.type}</span>
@@ -54,7 +54,7 @@ export default async function JobDetailsPage({
                 <span className={styles.tag}><span className={styles.iconDate}></span> Posted {new Date(job.postedAt).toLocaleDateString()}</span>
               </div>
             </div>
-            
+
             <div className={styles.headerActions}>
               <ApplyButton jobId={job.id} jobTitle={job.title}>Apply Now</ApplyButton>
               <button className="btn-secondary">Save Job</button>
@@ -82,14 +82,14 @@ export default async function JobDetailsPage({
           <section className={styles.detailSection}>
             <h2>Tech Stack / Skills</h2>
             <div className={styles.skillsList}>
-              {job.tags.map(tag => (
+              {job.tags.map((tag: string) => (
                 <span key={tag} className={styles.skillTag}>{tag}</span>
               ))}
             </div>
           </section>
-          
+
           <div className={styles.bottomActions}>
-             <ApplyButton jobId={job.id} jobTitle={job.title}>Apply for this position</ApplyButton>
+            <ApplyButton jobId={job.id} jobTitle={job.title}>Apply for this position</ApplyButton>
           </div>
         </div>
 

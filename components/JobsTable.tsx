@@ -21,10 +21,10 @@ interface Job {
   title: string;
   location: string;
   type: string;
-  postedAt: string;
+  postedAt: string | Date;
   recruiter: {
     companyName: string;
-    companyLogoColor?: string;
+    companyLogoColor?: string | null;
   };
   tags: string[];
   status: string;
