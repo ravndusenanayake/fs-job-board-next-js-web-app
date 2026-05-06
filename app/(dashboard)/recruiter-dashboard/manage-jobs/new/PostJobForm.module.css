@@ -1,0 +1,411 @@
+/* ============================================================
+   Post New Job Form Styles
+   Uses design system tokens from globals.css
+   ============================================================ */
+
+.pageContainer {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 0 1rem 4rem;
+}
+
+.pageHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 2rem;
+}
+
+.pageTitle {
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: var(--foreground);
+  margin-bottom: 0.5rem;
+}
+
+.pageDescription {
+  color: var(--text-muted);
+  font-size: 1rem;
+}
+
+/* ─── Form Card ───────────────────────────────────────────── */
+.formCard {
+  background-color: var(--background);
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+
+/* ─── Section ─────────────────────────────────────────────── */
+.section {
+  padding: 2rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.section:last-of-type {
+  border-bottom: none;
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.sectionIcon {
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 0.5rem;
+  background-color: var(--primary-light);
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.sectionTitle {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--foreground);
+}
+
+.sectionSubtitle {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-top: 0.125rem;
+}
+
+/* ─── Grid Layouts ─────────────────────────────────────────── */
+.formGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+}
+
+@media (min-width: 640px) {
+  .formGrid2 {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.fullWidth {
+  grid-column: 1 / -1;
+}
+
+/* ─── Field ────────────────────────────────────────────────── */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--foreground);
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.required {
+  color: #ef4444;
+  font-size: 0.75rem;
+}
+
+.optional {
+  color: var(--text-muted);
+  font-weight: 400;
+  font-size: 0.75rem;
+}
+
+.input,
+.select,
+.textarea {
+  width: 100%;
+  padding: 0.65rem 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--border);
+  background-color: var(--surface);
+  color: var(--foreground);
+  font-family: inherit;
+  font-size: 0.95rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
+}
+
+.input::placeholder,
+.textarea::placeholder {
+  color: var(--text-muted);
+}
+
+.input:focus,
+.select:focus,
+.textarea:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.12);
+}
+
+.inputError,
+.selectError {
+  border-color: #ef4444 !important;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1) !important;
+}
+
+.select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  padding-right: 2.5rem;
+  cursor: pointer;
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 130px;
+  line-height: 1.6;
+}
+
+.errorMessage {
+  font-size: 0.8rem;
+  color: #ef4444;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.helperText {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+/* ─── Character Counter ─────────────────────────────────────── */
+.fieldFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.charCount {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.charCountWarn {
+  color: #f59e0b;
+}
+
+/* ─── Tag Input ─────────────────────────────────────────────── */
+.tagInputWrapper {
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  background-color: var(--surface);
+  padding: 0.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  min-height: 48px;
+  cursor: text;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.tagInputWrapper:focus-within {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.12);
+}
+
+.tagInputWrapperError {
+  border-color: #ef4444 !important;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1) !important;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background-color: var(--primary-light);
+  color: var(--primary);
+  border-radius: 9999px;
+  padding: 0.2rem 0.75rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.tagRemove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 9999px;
+  color: var(--primary);
+  opacity: 0.7;
+  transition: opacity 0.15s, background-color 0.15s;
+  flex-shrink: 0;
+}
+
+.tagRemove:hover {
+  opacity: 1;
+  background-color: rgba(124, 58, 237, 0.15);
+}
+
+.tagInput {
+  border: none;
+  outline: none;
+  background: transparent;
+  color: var(--foreground);
+  font-family: inherit;
+  font-size: 0.92rem;
+  flex: 1;
+  min-width: 120px;
+  padding: 0.2rem 0.25rem;
+}
+
+.tagInput::placeholder {
+  color: var(--text-muted);
+}
+
+/* ─── Form Footer / Actions ─────────────────────────────────── */
+.formFooter {
+  padding: 1.5rem 2rem;
+  background-color: var(--surface);
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 1rem;
+}
+
+.submitBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 2rem;
+  background-color: var(--primary);
+  color: white;
+  border-radius: 0.5rem;
+  font-weight: 700;
+  font-size: 0.95rem;
+  font-family: inherit;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s, box-shadow 0.2s;
+  box-shadow: var(--shadow-sm);
+}
+
+.submitBtn:hover:not(:disabled) {
+  background-color: var(--primary-hover);
+  box-shadow: var(--shadow);
+}
+
+.submitBtn:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.submitBtn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.submitBtnSpinner {
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.cancelBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background-color: transparent;
+  color: var(--text-muted);
+  border-radius: 0.5rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+  font-family: inherit;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.cancelBtn:hover {
+  background-color: var(--surface-hover);
+  color: var(--foreground);
+  border-color: var(--text-muted);
+}
+
+/* ─── Global Error Banner ────────────────────────────────────── */
+.errorBanner {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.5rem;
+  background-color: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: 0.5rem;
+  color: #dc2626;
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+}
+
+/* ─── Status Toggle Buttons ─────────────────────────────────── */
+.statusGroup {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.statusOption {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  border: 1.5px solid var(--border);
+  background-color: var(--surface);
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: left;
+}
+
+.statusOption:hover {
+  border-color: var(--primary);
+}
+
+.statusOptionActive {
+  border-color: var(--primary);
+  background-color: var(--primary-light);
+}
+
+.statusOptionLabel {
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--foreground);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.statusOptionDesc {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.statusDot {
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 9999px;
+  display: inline-block;
+}
+
+.dotPublished { background-color: #10b981; }
+.dotDraft { background-color: #f59e0b; }
