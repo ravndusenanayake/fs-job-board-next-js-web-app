@@ -409,3 +409,4 @@
 
 .dotPublished { background-color: #10b981; }
 .dotDraft { background-color: #f59e0b; }
+.dotClosed { background-color: var(--text-muted); }

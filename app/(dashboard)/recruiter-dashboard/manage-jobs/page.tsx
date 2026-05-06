@@ -49,9 +49,12 @@ export default async function ManageJobsPage(props: Props) {
         </Link>
       </div>
 
-      {/* Success banner after posting a job */}
-      {showSuccess && (
+      {/* Success banner after actions */}
+      {searchParams.success === "1" && (
         <SuccessBanner message="Your job listing has been successfully posted!" />
+      )}
+      {searchParams.success === "updated" && (
+        <SuccessBanner message="Job details have been successfully updated!" />
       )}
 
       <JobsTable

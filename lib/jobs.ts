@@ -120,3 +120,16 @@ export async function getJobStats(recruiterId?: string) {
 
   return { total, published, drafts, closed };
 }
+
+export async function deleteJob(id: string) {
+  return await prisma.job.delete({
+    where: { id },
+  });
+}
+
+export async function updateJob(id: string, data: any) {
+  return await prisma.job.update({
+    where: { id },
+    data,
+  });
+}

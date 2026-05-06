@@ -16,10 +16,11 @@ import styles from "./PostJobForm.module.css";
 
 // ─── Types ─────────────────────────────────────────────────────────────────────
 interface FormData {
+  id?: string;
   title: string;
   location: string;
   type: string;
-  status: "Published" | "Draft";
+  status: "Published" | "Draft" | "Closed";
   salaryRange: string;
   tags: string[];
   description: string;
@@ -86,9 +87,14 @@ function validateForm(data: FormData): FormErrors {
 }
 
 // ─── Component ──────────────────────────────────────────────────────────────
-export default function PostJobForm() {
+interface PostJobFormProps {
+  initialData?: FormData;
+  isEdit?: boolean;
+}
+
+export default function PostJobForm({ initialData, isEdit = false }: PostJobFormProps) {
   const router = useRouter();
-  const [form, setForm] = useState<FormData>(INITIAL_FORM);
+  const [form, setForm] = useState<FormData>(initialData || INITIAL_FORM);
   const [errors, setErrors] = useState<FormErrors>({});
   const [tagInput, setTagInput] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -106,7 +112,7 @@ export default function PostJobForm() {
     }
   };
 
-  const handleStatusChange = (status: "Published" | "Draft") => {
+  const handleStatusChange = (status: "Published" | "Draft" | "Closed") => {
     setForm((prev) => ({ ...prev, status }));
   };
 
@@ -166,8 +172,11 @@ export default function PostJobForm() {
     setErrors({});
 
     try {
-      const res = await fetch("/api/jobs", {
-        method: "POST",
+      const url = isEdit ? `/api/jobs/${form.id}` : "/api/jobs";
+      const method = isEdit ? "PATCH" : "POST";
+
+      const res = await fetch(url, {
+        method,
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(dataToValidate),
       });
@@ -189,7 +198,8 @@ export default function PostJobForm() {
       }
 
       // Success → redirect with success flag
-      router.push("/recruiter-dashboard/manage-jobs?success=1");
+      router.push(`/recruiter-dashboard/manage-jobs?success=${isEdit ? 'updated' : '1'}`);
+      router.refresh();
     } catch {
       setErrors({ _global: "A network error occurred. Please check your connection and try again." });
     } finally {
@@ -483,6 +493,19 @@ export default function PostJobForm() {
                 Hidden from public — you can publish later
               </div>
             </button>
+            <button
+              type="button"
+              className={`${styles.statusOption} ${form.status === "Closed" ? styles.statusOptionActive : ""}`}
+              onClick={() => handleStatusChange("Closed")}
+            >
+              <div className={styles.statusOptionLabel}>
+                <span className={`${styles.statusDot} ${styles.dotClosed}`} />
+                Closed
+              </div>
+              <div className={styles.statusOptionDesc}>
+                Job is no longer accepting applications
+              </div>
+            </button>
           </div>
         </div>
       </div>
@@ -506,11 +529,11 @@ export default function PostJobForm() {
           {isSubmitting ? (
             <>
               <Loader2 size={18} className={styles.submitBtnSpinner} />
-              Posting…
+              {isEdit ? "Updating…" : "Posting…"}
             </>
           ) : (
             <>
-              {form.status === "Draft" ? "Save as Draft" : "Post Job"}
+              {isEdit ? "Update Job" : (form.status === "Draft" ? "Save as Draft" : "Post Job")}
               <ChevronRight size={18} />
             </>
           )}

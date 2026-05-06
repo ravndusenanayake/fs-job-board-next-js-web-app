@@ -11,7 +11,8 @@ import {
   useReactTable,
   SortingState,
 } from '@tanstack/react-table';
-import { Search, Eye, ArrowUpDown, ArrowUp, ArrowDown, Check, ChevronDown } from 'lucide-react';
+import { Search, Eye, ArrowUpDown, ArrowUp, ArrowDown, Check, ChevronDown, Edit2, Trash2, Loader2, AlertTriangle } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import JobDetailsModal from './JobDetailsModal';
 import styles from './JobsTable.module.css';
 
@@ -26,22 +27,39 @@ interface Job {
     companyLogoColor?: string;
   };
   tags: string[];
+  status: string;
 }
 
 interface JobsTableProps {
   data: Job[];
+  stats: {
+    total: number;
+    published: number;
+    drafts: number;
+    closed: number;
+  };
+  totalItems: number;
+  totalPages: number;
+  currentPage: number;
+  currentQuery: string;
+  currentType: string;
+  currentStatus: string;
+  currentSort: string;
 }
 
 const columnHelper = createColumnHelper<Job>();
 
-export default function JobsTable({ data }: JobsTableProps) {
+export default function JobsTable({ data, stats }: JobsTableProps) {
   const [sorting, setSorting] = useState<SortingState>([{ id: 'postedAt', desc: true }]);
   const [globalFilter, setGlobalFilter] = useState('');
   const [typeFilter, setTypeFilter] = useState('');
   const [selectedJob, setSelectedJob] = useState<Job | null>(null);
   const [statusFilter, setStatusFilter] = useState('All Statuses');
   const [isStatusOpen, setIsStatusOpen] = useState(false);
+  const [jobToDelete, setJobToDelete] = useState<Job | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
   const statusRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
 
   // Close dropdown on outside click
   useEffect(() => {
@@ -54,14 +72,11 @@ export default function JobsTable({ data }: JobsTableProps) {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  // Extend data with mock status (defaulting everything to 'Published' to match screenshot)
-  const tableData = useMemo(() => data.map(job => ({ ...job, status: 'Published' })), [data]);
+  // Use actual data
+  const tableData = useMemo(() => data, [data]);
 
-  // Calculate Stats
-  const totalJobs = tableData.length;
-  const publishedJobs = tableData.filter(j => j.status === 'Published').length;
-  const draftJobs = tableData.filter(j => j.status === 'Draft').length;
-  const closedJobs = tableData.filter(j => j.status === 'Closed').length;
+  // Global Stats from Props
+  const { total: totalJobs, published: publishedJobs, drafts: draftJobs, closed: closedJobs } = stats;
 
   const columns = useMemo(
     () => [
@@ -123,13 +138,29 @@ export default function JobsTable({ data }: JobsTableProps) {
         id: 'actions',
         header: 'Actions',
         cell: info => (
-          <button
-            className={styles.actionBtn}
-            onClick={() => setSelectedJob(info.row.original)}
-            aria-label="View Details"
-          >
-            <Eye size={18} />
-          </button>
+          <div className={styles.actionsContainer}>
+            <button
+              className={styles.actionBtn}
+              onClick={() => setSelectedJob(info.row.original)}
+              title="View Details"
+            >
+              <Eye size={18} />
+            </button>
+            <button
+              className={`${styles.actionBtn} ${styles.editBtn}`}
+              onClick={() => router.push(`/recruiter-dashboard/manage-jobs/${info.row.original.id}/edit`)}
+              title="Edit Job"
+            >
+              <Edit2 size={18} />
+            </button>
+            <button
+              className={`${styles.actionBtn} ${styles.deleteBtn}`}
+              onClick={() => setJobToDelete(info.row.original)}
+              title="Delete Job"
+            >
+              <Trash2 size={18} />
+            </button>
+          </div>
         ),
       }),
     ],
@@ -328,11 +359,67 @@ export default function JobsTable({ data }: JobsTableProps) {
         )}
       </div>
 
+
       {selectedJob && (
         <JobDetailsModal
           job={selectedJob}
           onClose={() => setSelectedJob(null)}
         />
+      )}
+
+      {/* Delete Confirmation Modal */}
+      {jobToDelete && (
+        <div className={styles.modalOverlay}>
+          <div className={styles.confirmModal}>
+            <div className={styles.confirmHeader}>
+              <div className={styles.warningIcon}>
+                <AlertTriangle size={24} />
+              </div>
+              <h3>Delete Job Posting?</h3>
+            </div>
+            <p className={styles.confirmText}>
+              Are you sure you want to delete <strong>{jobToDelete.title}</strong>? 
+              This action cannot be undone and all associated applications will be permanently removed.
+            </p>
+            <div className={styles.confirmActions}>
+              <button 
+                className={styles.cancelBtn} 
+                onClick={() => setJobToDelete(null)}
+                disabled={isDeleting}
+              >
+                Cancel
+              </button>
+              <button 
+                className={styles.confirmDeleteBtn} 
+                onClick={async () => {
+                  setIsDeleting(true);
+                  try {
+                    const res = await fetch(`/api/jobs/${jobToDelete.id}`, { method: 'DELETE' });
+                    if (res.ok) {
+                      router.refresh();
+                      setJobToDelete(null);
+                    } else {
+                      alert('Failed to delete job. Please try again.');
+                    }
+                  } catch (error) {
+                    console.error('Delete error:', error);
+                    alert('An error occurred. Please try again.');
+                  } finally {
+                    setIsDeleting(false);
+                  }
+                }}
+                disabled={isDeleting}
+              >
+                {isDeleting ? (
+                  <>
+                    <Loader2 size={16} className={styles.spinner} />
+                    Deleting...
+                  </>
+                ) : 'Delete Job'}
+              </button>
+            </div>
+          </div>
+        </div>
       )}
     </>
   );
