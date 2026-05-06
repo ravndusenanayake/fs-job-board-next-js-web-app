@@ -107,7 +107,7 @@ export default function JobsTable({ data }: JobsTableProps) {
           let statusClass = styles.statusActive; // Published
           if (status === 'Draft') statusClass = styles.statusDraft;
           if (status === 'Closed') statusClass = styles.statusClosed;
-          
+
           return (
             <span className={`${styles.statusPill} ${statusClass}`}>
               {status}
@@ -123,7 +123,7 @@ export default function JobsTable({ data }: JobsTableProps) {
         id: 'actions',
         header: 'Actions',
         cell: info => (
-          <button 
+          <button
             className={styles.actionBtn}
             onClick={() => setSelectedJob(info.row.original)}
             aria-label="View Details"
@@ -203,18 +203,18 @@ export default function JobsTable({ data }: JobsTableProps) {
 
             {/* Custom Status Dropdown */}
             <div className={styles.customDropdown} ref={statusRef}>
-              <button 
+              <button
                 className={styles.filterSelect}
                 onClick={() => setIsStatusOpen(!isStatusOpen)}
                 style={{ minWidth: '140px', textAlign: 'left', position: 'relative' }}
               >
                 {statusFilter}
               </button>
-              
+
               {isStatusOpen && (
                 <div className={styles.dropdownMenu}>
                   {statuses.map(s => (
-                    <div 
+                    <div
                       key={s}
                       className={`${styles.dropdownItem} ${statusFilter === s ? styles.dropdownItemActive : ''}`}
                       onClick={() => handleStatusChange(s)}
@@ -227,7 +227,7 @@ export default function JobsTable({ data }: JobsTableProps) {
               )}
             </div>
 
-            <select 
+            <select
               className={styles.filterSelect}
               value={typeFilter}
               onChange={handleTypeChange}
@@ -269,8 +269,8 @@ export default function JobsTable({ data }: JobsTableProps) {
                               asc: <ArrowUp size={14} />,
                               desc: <ArrowDown size={14} />,
                             }[header.column.getIsSorted() as string] ?? (
-                              header.column.getCanSort() ? <ArrowUpDown size={14} className={styles.sortPlaceholder} /> : null
-                            )}
+                                header.column.getCanSort() ? <ArrowUpDown size={14} className={styles.sortPlaceholder} /> : null
+                              )}
                           </div>
                         )}
                       </th>
@@ -329,9 +329,9 @@ export default function JobsTable({ data }: JobsTableProps) {
       </div>
 
       {selectedJob && (
-        <JobDetailsModal 
-          job={selectedJob} 
-          onClose={() => setSelectedJob(null)} 
+        <JobDetailsModal
+          job={selectedJob}
+          onClose={() => setSelectedJob(null)}
         />
       )}
     </>

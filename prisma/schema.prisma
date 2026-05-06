@@ -38,6 +38,7 @@ model Job {
   salaryRange   String?
   postedAt      DateTime      @default(now())
   tags          String[]      // PostgreSQL supports string arrays
+  status        String        @default("Published")
   
   // Relation back to the Recruiter
   recruiterId   String
