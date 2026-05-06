@@ -1,8 +1,8 @@
 import Link from "next/link";
 import styles from "./page.module.css";
-import { getJobs } from "../../lib/jobs";
-import JobCard from "../../components/JobCard";
-import JobFilters from "../../components/JobFilters";
+import { getJobs } from "../../../lib/jobs";
+import JobCard from "../../../components/JobCard";
+import JobFilters from "../../../components/JobFilters";
 
 export default async function JobsPage({
   searchParams,

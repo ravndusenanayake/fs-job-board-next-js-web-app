@@ -1,8 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import styles from "./page.module.css";
-import { getJobs } from "../lib/jobs";
-import JobCard from "../components/JobCard";
+import { getJobs } from "../../lib/jobs";
+import JobCard from "../../components/JobCard";
 
 export default async function Home() {
   // Fetch latest 6 jobs for the homepage

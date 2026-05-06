@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import ApplyButton from "../../../components/ApplyButton";
-import { getJobById } from "../../../lib/jobs";
+import ApplyButton from "../../../../components/ApplyButton";
+import { getJobById } from "../../../../lib/jobs";
 import styles from "./page.module.css";
 
 export default async function JobDetailsPage({

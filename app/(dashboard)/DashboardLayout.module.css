@@ -1,0 +1,11 @@
+.dashboardWrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: var(--surface);
+}
+
+.mainContent {
+  flex: 1;
+  padding: 2rem 0;
+}
