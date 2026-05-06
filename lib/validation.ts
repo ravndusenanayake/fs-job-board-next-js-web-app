@@ -9,10 +9,10 @@ export const PostJobSchema = z.object({
     .string({ message: 'Location is required.' })
     .min(2, 'Location must be at least 2 characters.'),
   type: z.enum(['Full-time', 'Part-time', 'Contract', 'Internship'], {
-    errorMap: () => ({ message: 'Please select a valid job type.' }),
+    message: 'Please select a valid job type.',
   }),
   status: z.enum(['Published', 'Draft', 'Closed'], {
-    errorMap: () => ({ message: 'Please select a valid status.' }),
+    message: 'Please select a valid status.',
   }),
   salaryRange: z.string().max(50, 'Salary range is too long.').optional().or(z.literal('')),
   tags: z

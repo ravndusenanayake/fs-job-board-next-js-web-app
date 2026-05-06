@@ -28,3 +28,4 @@ const generateSlug = (title: string, company: string, existingSlugs: Set<string>
   return slug;
 };
 
+export const jobs: any[] = [];
