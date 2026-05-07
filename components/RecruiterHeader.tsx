@@ -1,13 +1,18 @@
 "use client";
 
+import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import Image from 'next/image';
 import ThemeToggle from './ThemeToggle';
 import styles from './RecruiterHeader.module.css';
 
 export default function RecruiterHeader() {
   const pathname = usePathname();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
 
   return (
     <header className={styles.header}>
@@ -17,34 +22,44 @@ export default function RecruiterHeader() {
           <span>CCA Recruiter</span>
         </Link>
         
-        <nav className={styles.nav}>
-          <ul className={styles.navLinks}>
-            <li>
-              <Link 
-                href="/recruiter-dashboard" 
-                className={pathname === '/recruiter-dashboard' ? styles.active : ''}
-              >
-                Dashboard
-              </Link>
-            </li>
-            <li>
-              <Link 
-                href="/recruiter-dashboard/manage-jobs"
-                className={pathname?.includes('/manage-jobs') ? styles.active : ''}
-              >
-                Manage Jobs
-              </Link>
-            </li>
-            <li>
-              <Link 
-                href="/recruiter-dashboard/manage-applications"
-                className={pathname?.includes('/manage-applications') ? styles.active : ''}
-              >
-                Applications
-              </Link>
-            </li>
-          </ul>
-        </nav>
+        <div className={`${styles.navWrapper} ${isMenuOpen ? styles.isOpen : ''}`}>
+          <nav className={styles.nav}>
+            <ul className={styles.navLinks}>
+              <li>
+                <Link 
+                  href="/recruiter-dashboard" 
+                  className={pathname === '/recruiter-dashboard' ? styles.active : ''}
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Dashboard
+                </Link>
+              </li>
+              <li>
+                <Link 
+                  href="/recruiter-dashboard/manage-jobs"
+                  className={pathname?.includes('/manage-jobs') ? styles.active : ''}
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Manage Jobs
+                </Link>
+              </li>
+              <li>
+                <Link 
+                  href="/recruiter-dashboard/manage-applications"
+                  className={pathname?.includes('/manage-applications') ? styles.active : ''}
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Applications
+                </Link>
+              </li>
+            </ul>
+          </nav>
+          
+          <div className={styles.mobileActions}>
+             <Link href="/recruiter-dashboard/settings" onClick={() => setIsMenuOpen(false)}>Settings</Link>
+             <button onClick={() => { setIsMenuOpen(false); alert('Log out functionality coming soon'); }}>Log out</button>
+          </div>
+        </div>
         
         <div className={styles.actions}>
           <ThemeToggle />
@@ -63,6 +78,16 @@ export default function RecruiterHeader() {
               <button onClick={() => alert('Log out functionality coming soon')}>Log out</button>
             </div>
           </div>
+
+          <button 
+            className={`${styles.mobileMenuBtn} ${isMenuOpen ? styles.btnActive : ''}`} 
+            onClick={toggleMenu}
+            aria-label="Toggle menu"
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
         </div>
       </div>
     </header>
