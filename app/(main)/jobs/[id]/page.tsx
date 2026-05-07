@@ -16,10 +16,10 @@ export default async function JobDetailsPage({
     notFound();
   }
 
-  // Placeholder content for demonstration since our data file only has basic metadata
+  // Use database content if available, fallback to placeholders for demonstration
   const aboutCompany = job.recruiter.companyDescription || `At ${job.recruiter.companyName}, we are driven by innovation and our passion for building products that matter. We believe in empowering our teams to take ownership and solve complex problems in a collaborative environment. Join us to make a real impact.`;
 
-  const description = `We are looking for a passionate ${job.title} to join our growing team in ${job.location}. In this role, you will work closely with cross-functional teams to design, develop, and deliver high-quality software solutions. You will have the opportunity to work with modern technologies and directly contribute to the success of our core products.`;
+  const description = job.description || `We are looking for a passionate ${job.title} to join our growing team in ${job.location}. In this role, you will work closely with cross-functional teams to design, develop, and deliver high-quality software solutions. You will have the opportunity to work with modern technologies and directly contribute to the success of our core products.`;
 
   const responsibilities = [
     "Collaborate with engineers, designers, and product managers to ship new features.",
