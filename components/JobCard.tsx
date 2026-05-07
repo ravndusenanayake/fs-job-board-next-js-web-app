@@ -1,10 +1,27 @@
 import Link from 'next/link';
 import styles from './JobCard.module.css';
-import { Prisma } from '@prisma/client';
 
-export type JobWithRecruiter = Prisma.JobGetPayload<{
-  include: { recruiter: true }
-}>;
+export interface JobWithRecruiter {
+  id: string;
+  title: string;
+  location: string;
+  type: string;
+  salaryRange: string | null;
+  postedAt: Date | string;
+  tags: string[];
+  status: string;
+  description: string | null;
+  recruiterId: string;
+  recruiter: {
+    id: string;
+    name: string;
+    email: string;
+    companyName: string;
+    companyDescription: string | null;
+    companyLogoColor: string | null;
+    createdAt: Date | string;
+  };
+}
 
 interface JobCardProps {
   job: JobWithRecruiter;
