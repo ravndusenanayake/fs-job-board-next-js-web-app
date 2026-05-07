@@ -83,10 +83,17 @@
 
 .stats {
   display: flex;
-  gap: 2rem;
+  flex-wrap: wrap;
+  gap: 1.5rem;
   margin-top: 2rem;
   padding-top: 2rem;
   border-top: 1px solid var(--border);
+}
+
+@media (min-width: 480px) {
+  .stats {
+    gap: 3rem;
+  }
 }
 
 .statItem {
@@ -97,14 +104,28 @@
 
 .statNumber {
   font-family: var(--font-outfit);
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   font-weight: 700;
   color: var(--foreground);
 }
 
+@media (min-width: 480px) {
+  .statNumber {
+    font-size: 1.5rem;
+  }
+}
+
 .statLabel {
-  font-size: 0.875rem;
+  font-size: 0.75rem;
   color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+@media (min-width: 480px) {
+  .statLabel {
+    font-size: 0.875rem;
+  }
 }
 
 .heroImageWrapper {

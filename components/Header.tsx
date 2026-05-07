@@ -1,7 +1,16 @@
+'use client';
+
+import { useState } from 'react';
 import styles from './Header.module.css';
 import Link from 'next/link';
 
 export default function Header() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
   return (
     <header className={styles.header}>
       <div className={`container ${styles.headerContainer}`}>
@@ -10,19 +19,25 @@ export default function Header() {
           <span>CCA Job Board</span>
         </Link>
         
-        <nav className={styles.nav}>
-          <ul className={styles.navLinks}>
-            <li><Link href="/">Home</Link></li>
-            <li><Link href="/jobs">Find Jobs</Link></li>
-          </ul>
-        </nav>
-        
-        <div className={styles.actions}>
-          <Link href="#" className={styles.signIn}>Sign In</Link>
-          <Link href="#" className="btn-primary">Post a Job</Link>
+        <div className={`${styles.mobileWrapper} ${isMenuOpen ? styles.isOpen : ''}`}>
+          <nav className={styles.nav}>
+            <ul className={styles.navLinks}>
+              <li><Link href="/" onClick={() => setIsMenuOpen(false)}>Home</Link></li>
+              <li><Link href="/jobs" onClick={() => setIsMenuOpen(false)}>Find Jobs</Link></li>
+            </ul>
+          </nav>
+          
+          <div className={styles.actions}>
+            <Link href="#" className={styles.signIn}>Sign In</Link>
+            <Link href="#" className="btn-primary">Post a Job</Link>
+          </div>
         </div>
         
-        <button className={styles.mobileMenuBtn} aria-label="Toggle menu">
+        <button 
+          className={`${styles.mobileMenuBtn} ${isMenuOpen ? styles.btnActive : ''}`} 
+          onClick={toggleMenu}
+          aria-label="Toggle menu"
+        >
           <span></span>
           <span></span>
           <span></span>
