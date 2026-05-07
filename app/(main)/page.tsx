@@ -4,6 +4,8 @@ import styles from "./page.module.css";
 import { getJobs } from "../../lib/jobs";
 import JobCard, { JobWithRecruiter } from "../../components/JobCard";
 
+export const dynamic = 'force-dynamic';
+
 export default async function Home() {
   // Fetch latest 6 jobs for the homepage
   const { jobs: currentJobs } = await getJobs({ page: 1, limit: 6 });

@@ -4,6 +4,8 @@ import ApplyButton from "../../../../components/ApplyButton";
 import { getJobById } from "../../../../lib/jobs";
 import styles from "./page.module.css";
 
+export const dynamic = 'force-dynamic';
+
 export default async function JobDetailsPage({
   params,
 }: {

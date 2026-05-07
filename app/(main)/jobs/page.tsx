@@ -4,6 +4,8 @@ import { getJobs } from "../../../lib/jobs";
 import JobCard, { JobWithRecruiter } from "../../../components/JobCard";
 import JobFilters from "../../../components/JobFilters";
 
+export const dynamic = 'force-dynamic';
+
 export default async function JobsPage({
   searchParams,
 }: {
