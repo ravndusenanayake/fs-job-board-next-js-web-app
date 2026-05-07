@@ -312,7 +312,7 @@ export default function PostJobForm({ initialData, isEdit = false }: PostJobForm
                 className={`${styles.select} ${errors.type ? styles.selectError : ""}`}
               >
                 <option value="">Select a type…</option>
-                {JOB_TYPES.map((t) => (
+                {JOB_TYPES.map((t: string) => (
                   <option key={t} value={t}>{t}</option>
                 ))}
               </select>
@@ -366,7 +366,7 @@ export default function PostJobForm({ initialData, isEdit = false }: PostJobForm
               className={`${styles.tagInputWrapper} ${errors.tags ? styles.tagInputWrapperError : ""}`}
               onClick={() => tagInputRef.current?.focus()}
             >
-              {form.tags.map((tag) => (
+              {form.tags.map((tag: string) => (
                 <span key={tag} className={styles.tag}>
                   {tag}
                   <button

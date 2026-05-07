@@ -2,7 +2,7 @@ import Link from 'next/link';
 import styles from './JobCard.module.css';
 import { Prisma } from '@prisma/client';
 
-type JobWithRecruiter = Prisma.JobGetPayload<{
+export type JobWithRecruiter = Prisma.JobGetPayload<{
   include: { recruiter: true }
 }>;
 

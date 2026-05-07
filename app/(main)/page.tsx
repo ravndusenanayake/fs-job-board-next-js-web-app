@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import styles from "./page.module.css";
 import { getJobs } from "../../lib/jobs";
-import JobCard from "../../components/JobCard";
+import JobCard, { JobWithRecruiter } from "../../components/JobCard";
 
 export default async function Home() {
   // Fetch latest 6 jobs for the homepage
@@ -67,7 +67,7 @@ export default async function Home() {
           </div>
           
           <div className={styles.jobsList}>
-            {currentJobs.map((job) => (
+            {currentJobs.map((job: JobWithRecruiter) => (
               <JobCard key={job.id} job={job} />
             ))}
           </div>

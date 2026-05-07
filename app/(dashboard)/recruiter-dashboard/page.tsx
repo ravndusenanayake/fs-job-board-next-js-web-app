@@ -99,7 +99,7 @@ export default function RecruiterDashboardPage() {
         </div>
         
         <div className={styles.activityList}>
-          {recentActivity.map((activity) => (
+          {recentActivity.map((activity: any) => (
             <div key={activity.id} className={styles.activityItem}>
               <div className={styles.activityIcon}>
                 {activity.initials}

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import styles from "./page.module.css";
 import { getJobs } from "../../../lib/jobs";
-import JobCard from "../../../components/JobCard";
+import JobCard, { JobWithRecruiter } from "../../../components/JobCard";
 import JobFilters from "../../../components/JobFilters";
 
 export default async function JobsPage({
@@ -63,7 +63,7 @@ export default async function JobsPage({
 
           {currentJobs.length > 0 ? (
             <div className={styles.jobsGrid}>
-              {currentJobs.map((job) => (
+              {currentJobs.map((job: JobWithRecruiter) => (
                 <JobCard key={job.id} job={job} />
               ))}
             </div>
