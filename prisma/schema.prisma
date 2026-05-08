@@ -7,6 +7,32 @@ generator client {
 }
 
 // -------------------------------------------------------------
+// ENUMS
+// -------------------------------------------------------------
+enum Role {
+  STUDENT
+  RECRUITER
+  ADMIN
+}
+
+// -------------------------------------------------------------
+// USER MODEL
+// -------------------------------------------------------------
+model User {
+  id            String    @id @default(uuid())
+  email         String    @unique
+  name          String?
+  role          Role      @default(STUDENT)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  // Relation to Recruiter profile
+  recruiter     Recruiter?
+
+  @@map("users")
+}
+
+// -------------------------------------------------------------
 // RECRUITER MODEL
 // -------------------------------------------------------------
 model Recruiter {
@@ -14,12 +40,20 @@ model Recruiter {
   name               String   // Recruiter's personal name
   email              String   @unique
   
+  // Link to User account
+  userId             String?  @unique
+  user               User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
   // Company Details
   companyName        String
   companyDescription String?
   companyLogoColor   String?  // Replaces the logoColor on the individual job
   
   createdAt          DateTime @default(now())
+  
+  // Admin Management Fields
+  isVerified         Boolean  @default(false)
+  verificationStatus String   @default("Pending") // Pending, Approved, Rejected
   
   // A recruiter can post multiple jobs
   jobs               Job[]

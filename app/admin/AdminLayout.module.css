@@ -1,0 +1,83 @@
+.adminWrapper {
+  display: flex;
+  min-height: 100vh;
+  background-color: #f8f9fd;
+  color: #2d3436;
+}
+
+.adminContent {
+  flex: 1;
+  margin-left: 280px;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.topHeader {
+  height: 100px;
+  background-color: #fff;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 3rem;
+  flex-shrink: 0;
+}
+
+.breadcrumb {
+  font-size: 0.8rem;
+  color: #a4b0be;
+  margin-bottom: 0.3rem;
+  font-weight: 500;
+}
+
+.headerTitle h1 {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #1a1a2e;
+  margin: 0;
+}
+
+.searchBar input {
+  padding: 0.8rem 1.5rem;
+  border-radius: 12px;
+  border: 1px solid #f1f2f6;
+  background-color: #f8f9fd;
+  width: 300px;
+  font-size: 0.9rem;
+  transition: all 0.3s;
+}
+
+.searchBar input:focus {
+  outline: none;
+  border-color: #6c5ce7;
+  background-color: #fff;
+  box-shadow: 0 4px 12px rgba(108, 92, 231, 0.1);
+}
+
+.scrollArea {
+  flex: 1;
+  padding: 2.5rem 3rem;
+  overflow-y: auto;
+}
+
+/* Dark mode support */
+:global(.dark) .adminWrapper {
+  background-color: #1a1a2e;
+}
+
+:global(.dark) .topHeader {
+  background-color: #1f1f3a;
+  border-bottom-color: rgba(255, 255, 255, 0.05);
+}
+
+:global(.dark) .headerTitle h1 {
+  color: #fff;
+}
+
+:global(.dark) .searchBar input {
+  background-color: #2d2d4a;
+  border-color: rgba(255, 255, 255, 0.05);
+  color: #fff;
+}
