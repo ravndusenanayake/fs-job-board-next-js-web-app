@@ -4,7 +4,7 @@ import prisma from '../../../lib/prisma';
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    
+
     const { jobId, name, email, portfolioUrl, coverLetter } = body;
 
     // Server-side validation
@@ -39,7 +39,7 @@ export async function POST(request: Request) {
       { message: 'Application submitted successfully', applicationId: application.id },
       { status: 200 }
     );
-    
+
   } catch (error) {
     console.error('Application submission error:', error);
     return NextResponse.json(

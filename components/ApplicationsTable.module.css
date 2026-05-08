@@ -1,0 +1,147 @@
+.tableContainer {
+  background: white;
+  border-radius: 16px;
+  border: 1px solid #dfe6e9;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  margin-top: 1rem;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.th {
+  padding: 1.2rem 1.5rem;
+  background-color: #f8f9fa;
+  color: #636e72;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 1px solid #dfe6e9;
+}
+
+.tr {
+  transition: background-color 0.2s ease;
+}
+
+.tr:hover {
+  background-color: #f1f2f6;
+}
+
+.td {
+  padding: 1.2rem 1.5rem;
+  border-bottom: 1px solid #f1f2f6;
+  color: #2d3436;
+  font-size: 0.95rem;
+  vertical-align: middle;
+}
+
+.applicantInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+.applicantName {
+  font-weight: 600;
+  color: #2d3436;
+}
+
+.applicantEmail {
+  font-size: 0.85rem;
+  color: #636e72;
+}
+
+.jobTitle {
+  font-weight: 500;
+  color: #6c5ce7;
+}
+
+.badge {
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  display: inline-block;
+}
+
+.pending { background: #fff9db; color: #f08c00; }
+.reviewed { background: #e7f5ff; color: #228be6; }
+.shortlisted { background: #ebfbee; color: #40c057; }
+.rejected { background: #fff5f5; color: #fa5252; }
+
+.actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.viewBtn {
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  background: #f1f2f6;
+  color: #2d3436;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  border: 1px solid #dfe6e9;
+  transition: all 0.2s;
+  text-decoration: none;
+}
+
+.viewBtn:hover {
+  background: #6c5ce7;
+  color: white;
+  border-color: #6c5ce7;
+}
+
+/* Dark Mode */
+:global(.dark) .tableContainer {
+  background: #1e1e2e;
+  border-color: #313144;
+}
+
+:global(.dark) .th {
+  background-color: #252538;
+  color: #a4b0be;
+  border-bottom-color: #313144;
+}
+
+:global(.dark) .tr:hover {
+  background-color: #252538;
+}
+
+:global(.dark) .td {
+  border-bottom-color: #313144;
+  color: #f5f6fa;
+}
+
+:global(.dark) .applicantName { color: #f5f6fa; }
+:global(.dark) .applicantEmail { color: #a4b0be; }
+:global(.dark) .viewBtn {
+  background: #252538;
+  border-color: #313144;
+  color: #f5f6fa;
+}
+
+@media (max-width: 768px) {
+  .th:nth-child(2), .td:nth-child(2),
+  .th:nth-child(3), .td:nth-child(3) {
+    display: none;
+  }
+  
+  .td {
+    padding: 1rem;
+  }
+  
+  .applicantName {
+    font-size: 0.9rem;
+  }
+  
+  .viewBtn {
+    padding: 0.4rem 0.6rem;
+    font-size: 0.75rem;
+  }
+}

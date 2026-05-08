@@ -68,6 +68,7 @@ model Application {
   coverLetter   String?
   
   createdAt     DateTime @default(now())
+  status        String   @default("Pending") // Pending, Reviewed, Shortlisted, Rejected
 
   @@map("applications")
 }

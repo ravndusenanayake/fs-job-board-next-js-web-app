@@ -1,0 +1,227 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(4px);
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.modal {
+  background: white;
+  width: 90%;
+  max-width: 650px;
+  max-height: 85vh;
+  border-radius: 20px;
+  position: relative;
+  overflow-y: auto;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes slideUp {
+  from { transform: translateY(30px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.closeBtn {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  background: #f1f2f6;
+  border: none;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #636e72;
+  transition: all 0.2s;
+  z-index: 10;
+}
+
+.closeBtn:hover {
+  background: #6c5ce7;
+  color: white;
+}
+
+.header {
+  padding: 2.5rem;
+  border-bottom: 1px solid #f1f2f6;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.avatar {
+  width: 70px;
+  height: 70px;
+  background: #6c5ce7;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.headerText {
+  flex: 1;
+}
+
+.name {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #2d3436;
+  margin: 0;
+}
+
+.email {
+  color: #636e72;
+  margin: 0.2rem 0 0 0;
+}
+
+.statusBadge {
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.pending { background: #fff9db; color: #f08c00; }
+.reviewed { background: #e7f5ff; color: #228be6; }
+.shortlisted { background: #ebfbee; color: #40c057; }
+.rejected { background: #fff5f5; color: #fa5252; }
+
+.content {
+  padding: 2.5rem;
+}
+
+.section {
+  margin-bottom: 2rem;
+}
+
+.sectionTitle {
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #a4b0be;
+  letter-spacing: 1px;
+  margin-bottom: 0.8rem;
+}
+
+.jobTitle {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #6c5ce7;
+  margin-bottom: 0.2rem;
+}
+
+.date {
+  color: #636e72;
+  font-size: 0.9rem;
+}
+
+.link {
+  color: #6c5ce7;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+.coverLetter {
+  background: #f8f9fa;
+  padding: 1.5rem;
+  border-radius: 12px;
+  line-height: 1.6;
+  color: #2d3436;
+  white-space: pre-wrap;
+}
+
+.footer {
+  padding: 1.5rem 2.5rem;
+  border-top: 1px solid #f1f2f6;
+  background: #fdfdff;
+}
+
+.statusActions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.statusActions span {
+  font-weight: 600;
+  color: #2d3436;
+}
+
+.actionBtn {
+  padding: 0.6rem 1.2rem;
+  border-radius: 10px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 0.9rem;
+}
+
+.btnReviewed { background: #e7f5ff; color: #228be6; }
+.btnShortlisted { background: #ebfbee; color: #40c057; }
+.btnRejected { background: #fff5f5; color: #fa5252; }
+
+.actionBtn:hover {
+  filter: brightness(0.95);
+  transform: translateY(-1px);
+}
+
+.actionBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Dark Mode */
+:global(.dark) .modal {
+  background: #1e1e2e;
+}
+
+:global(.dark) .closeBtn {
+  background: #252538;
+}
+
+:global(.dark) .header {
+  border-bottom-color: #313144;
+}
+
+:global(.dark) .name { color: #f5f6fa; }
+:global(.dark) .jobTitle { color: #a29bfe; }
+:global(.dark) .coverLetter {
+  background: #252538;
+  color: #f5f6fa;
+}
+
+:global(.dark) .footer {
+  background: #1a1a26;
+  border-top-color: #313144;
+}
+
+:global(.dark) .statusActions span { color: #f5f6fa; }
