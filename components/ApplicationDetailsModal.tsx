@@ -57,7 +57,7 @@ export default function ApplicationDetailsModal({ application, isOpen, onClose, 
     <div className={styles.overlay} onClick={onClose}>
       <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
         <button className={styles.closeBtn} onClick={onClose}>×</button>
-        
+
         <div className={styles.header}>
           <div className={styles.avatar}>
             {application.name.charAt(0)}
@@ -99,23 +99,30 @@ export default function ApplicationDetailsModal({ application, isOpen, onClose, 
           <div className={styles.statusActions}>
             <span>Update Status:</span>
             <button 
-              className={`${styles.actionBtn} ${styles.btnReviewed}`}
+              className={`${styles.actionBtn} ${styles.btnPending} ${application.status === 'Pending' ? styles.active : ''}`}
+              onClick={() => handleStatusChange('Pending')}
+              disabled={isUpdating || application.status === 'Pending'}
+            >
+              Reset to Pending
+            </button>
+            <button 
+              className={`${styles.actionBtn} ${styles.btnReviewed} ${application.status === 'Reviewed' ? styles.active : ''}`}
               onClick={() => handleStatusChange('Reviewed')}
-              disabled={isUpdating}
+              disabled={isUpdating || application.status === 'Reviewed'}
             >
               Reviewed
             </button>
             <button 
-              className={`${styles.actionBtn} ${styles.btnShortlisted}`}
+              className={`${styles.actionBtn} ${styles.btnShortlisted} ${application.status === 'Shortlisted' ? styles.active : ''}`}
               onClick={() => handleStatusChange('Shortlisted')}
-              disabled={isUpdating}
+              disabled={isUpdating || application.status === 'Shortlisted'}
             >
               Shortlist
             </button>
             <button 
-              className={`${styles.actionBtn} ${styles.btnRejected}`}
+              className={`${styles.actionBtn} ${styles.btnRejected} ${application.status === 'Rejected' ? styles.active : ''}`}
               onClick={() => handleStatusChange('Rejected')}
-              disabled={isUpdating}
+              disabled={isUpdating || application.status === 'Rejected'}
             >
               Reject
             </button>

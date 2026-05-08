@@ -45,15 +45,15 @@ export default function ApplicationsTable({ applications: initialApplications }:
 
       if (response.ok) {
         // Update local state
-        setApplications(prev => 
+        setApplications(prev =>
           prev.map(app => app.id === id ? { ...app, status: newStatus } : app)
         );
-        
+
         // Update the selected application if it's the one we're viewing
         if (selectedApplication?.id === id) {
           setSelectedApplication({ ...selectedApplication, status: newStatus });
         }
-        
+
         // Optionally refresh the page data
         router.refresh();
       } else {
@@ -105,7 +105,7 @@ export default function ApplicationsTable({ applications: initialApplications }:
               </td>
               <td className={styles.td}>
                 <div className={styles.actions}>
-                  <button 
+                  <button
                     className={styles.viewBtn}
                     onClick={() => handleViewDetails(app)}
                   >
