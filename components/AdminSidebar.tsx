@@ -11,12 +11,14 @@ import {
   Settings,
   ChevronRight,
   Bell,
-  Activity
+  Activity,
+  UserCheck
 } from 'lucide-react';
 
 const navItems = [
   { label: 'Dashboard', href: '/admin', icon: LayoutDashboard },
-  { label: 'Recruiters', href: '/admin/recruiters', icon: Users },
+  { label: 'Users', href: '/admin/users', icon: Users },
+  { label: 'Recruiters', href: '/admin/recruiters', icon: UserCheck },
   { label: 'Job Moderation', href: '/admin/jobs', icon: Briefcase },
   { label: 'System Logs', href: '/admin/logs', icon: Activity },
   { label: 'Settings', href: '/admin/settings', icon: Settings },

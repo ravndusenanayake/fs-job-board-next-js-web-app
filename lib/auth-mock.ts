@@ -1,5 +1,6 @@
 import { cookies } from 'next/headers';
 import prisma from './prisma';
+import { Role } from '@prisma/client';
 
 /**
  * MOCK AUTH HELPER
@@ -13,7 +14,7 @@ export async function getAdminSession() {
   
   // MOCK: Finding the first ADMIN in the database to simulate a logged-in admin
   const admin = await prisma.user.findFirst({
-    where: { role: 'ADMIN' }
+    where: { role: Role.ADMIN }
   });
 
   if (!admin) return null;

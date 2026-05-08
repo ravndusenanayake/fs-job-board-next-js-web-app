@@ -1,16 +1,17 @@
 import 'dotenv/config';
 import prisma from '../lib/prisma';
+import { Role } from '@prisma/client';
 
 async function makeAdmin(email: string) {
   try {
     // 1. Check if user exists, if not create them
     const user = await prisma.user.upsert({
       where: { email },
-      update: { role: 'ADMIN' },
+      update: { role: Role.ADMIN },
       create: {
         email,
         name: 'Admin User',
-        role: 'ADMIN',
+        role: Role.ADMIN,
       },
     });
 
