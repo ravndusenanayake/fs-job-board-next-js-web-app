@@ -107,8 +107,8 @@ export default function UsersTable({ users }: { users: any[] }) {
                 <td className="px-8 py-6">
                   <div className="flex items-center gap-4">
                     <div className={`w-12 h-12 rounded-2xl flex items-center justify-center font-bold text-lg shadow-sm border ${user.role === Role.ADMIN ? 'bg-indigo-600 text-white border-indigo-500' :
-                        user.role === Role.RECRUITER ? 'bg-purple-100 text-purple-600 border-purple-100' :
-                          'bg-slate-100 text-slate-500 border-slate-200'
+                      user.role === Role.RECRUITER ? 'bg-purple-100 text-purple-600 border-purple-100' :
+                        'bg-slate-100 text-slate-500 border-slate-200'
                       }`}>
                       {user.name?.charAt(0) || user.email.charAt(0).toUpperCase()}
                     </div>
@@ -129,8 +129,8 @@ export default function UsersTable({ users }: { users: any[] }) {
                     onClick={() => handleRoleChange(user.id, user.role)}
                     disabled={loadingId === user.id}
                     className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all hover:scale-105 active:scale-95 ${user.role === Role.ADMIN ? 'bg-indigo-100 text-indigo-700' :
-                        user.role === Role.RECRUITER ? 'bg-purple-100 text-purple-700' :
-                          'bg-slate-100 text-slate-600'
+                      user.role === Role.RECRUITER ? 'bg-purple-100 text-purple-700' :
+                        'bg-slate-100 text-slate-600'
                       }`}
                   >
                     <ShieldCheck size={12} />
@@ -163,8 +163,8 @@ export default function UsersTable({ users }: { users: any[] }) {
                       onClick={() => handleToggleBan(user.id, user.isBanned)}
                       disabled={loadingId === user.id}
                       className={`p-2.5 rounded-xl transition-all shadow-sm active:scale-95 disabled:opacity-50 ${user.isBanned
-                          ? 'bg-emerald-50 text-emerald-600 hover:bg-emerald-600 hover:text-white'
-                          : 'bg-amber-50 text-amber-600 hover:bg-amber-600 hover:text-white'
+                        ? 'bg-emerald-50 text-emerald-600 hover:bg-emerald-600 hover:text-white'
+                        : 'bg-amber-50 text-amber-600 hover:bg-amber-600 hover:text-white'
                         }`}
                       title={user.isBanned ? "Unban User" : "Ban User"}
                     >
