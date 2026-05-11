@@ -25,3 +25,12 @@ export const PostJobSchema = z.object({
     .min(50, 'Description must be at least 50 characters.')
     .max(5000, 'Description must be 5000 characters or fewer.'),
 });
+
+export const SignUpSchema = z.object({
+  email: z.string().email("Invalid email address"),
+  password: z.string().min(6, "Password must be at least 6 characters"),
+  name: z.string().min(2, "Name must be at least 2 characters"),
+  role: z.enum(["USER", "RECRUITER"], {
+    message: "Please select a valid role.",
+  }),
+});
