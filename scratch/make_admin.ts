@@ -11,6 +11,7 @@ async function makeAdmin(email: string) {
       create: {
         email,
         name: 'Admin User',
+        password: 'password123', // Placeholder
         role: Role.ADMIN,
       },
     });
