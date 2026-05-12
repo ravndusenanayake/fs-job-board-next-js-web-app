@@ -6,16 +6,21 @@ export default withAuth(
     const token = req.nextauth.token;
     const path = req.nextUrl.pathname;
 
-    // Role-based authorization logic
-
+    // If they are not logged in at all, withAuth will handle redirect to /login
+    // based on the authorized callback below.
+    
+    // If they ARE logged in, we check their role:
+    
     // Protect Admin routes
     if (path.startsWith("/admin") && token?.role !== "ADMIN") {
-      return NextResponse.redirect(new URL("/login", req.url));
+      // Redirect to home instead of /login to avoid infinite loops
+      return NextResponse.redirect(new URL("/", req.url));
     }
 
     // Protect Recruiter routes
     if (path.startsWith("/recruiter-dashboard") && token?.role !== "RECRUITER") {
-      return NextResponse.redirect(new URL("/login", req.url));
+      // Redirect to home instead of /login
+      return NextResponse.redirect(new URL("/", req.url));
     }
   },
   {
