@@ -33,4 +33,14 @@ export const SignUpSchema = z.object({
   role: z.enum(["USER", "RECRUITER"], {
     message: "Please select a valid role.",
   }),
+  companyName: z.string().optional(),
+}).refine((data) => {
+  if (data.role === "RECRUITER" && (!data.companyName || data.companyName.trim() === "")) {
+    return false;
+  }
+  return true;
+}, {
+  message: "Company name is required for recruiters",
+  path: ["companyName"],
 });
+

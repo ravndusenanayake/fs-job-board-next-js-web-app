@@ -4,12 +4,13 @@ import { useState } from "react";
 import { signUp } from "@/actions/auth";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { User, Mail, Lock, Briefcase, ChevronRight, Loader2 } from "lucide-react";
+import { User, Mail, Lock, Briefcase, ChevronRight, Loader2, Building } from "lucide-react";
 
 export default function SignUpPage() {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [selectedRole, setSelectedRole] = useState("USER");
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -120,7 +121,8 @@ export default function SignUpPage() {
                     name="role"
                     value="USER"
                     className="sr-only"
-                    defaultChecked
+                    checked={selectedRole === "USER"}
+                    onChange={(e) => setSelectedRole(e.target.value)}
                   />
                   <span className="text-sm font-medium text-gray-900">Job Seeker</span>
                 </label>
@@ -130,11 +132,35 @@ export default function SignUpPage() {
                     name="role"
                     value="RECRUITER"
                     className="sr-only"
+                    checked={selectedRole === "RECRUITER"}
+                    onChange={(e) => setSelectedRole(e.target.value)}
                   />
                   <span className="text-sm font-medium text-gray-900">Recruiter</span>
                 </label>
               </div>
             </div>
+
+            {/* Company Name Field (Conditional) */}
+            {selectedRole === "RECRUITER" && (
+              <div className="animate-in fade-in slide-in-from-top-2 duration-300">
+                <label className="block text-sm font-semibold text-gray-700 mb-1.5 ml-1">
+                  Company Name
+                </label>
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-400">
+                    <Building size={18} />
+                  </div>
+                  <input
+                    name="companyName"
+                    type="text"
+                    required
+                    className="block w-full pl-11 pr-4 py-3 bg-gray-50 border border-gray-200 text-gray-900 text-sm rounded-xl focus:ring-2 focus:ring-[var(--primary)]/20 focus:border-[var(--primary)] outline-none transition-all placeholder:text-gray-400"
+                    placeholder="Tech Corp"
+                  />
+                </div>
+              </div>
+            )}
+
           </div>
 
           {error && (

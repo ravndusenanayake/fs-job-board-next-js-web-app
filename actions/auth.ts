@@ -37,6 +37,17 @@ export async function signUp(values: any) {
         password: hashedPassword,
         name,
         role,
+        ...(role === "RECRUITER" && {
+          recruiter: {
+            create: {
+              name: name,
+              email: email,
+              companyName: validatedFields.data.companyName || "Unknown Company",
+              verificationStatus: "Pending",
+              isVerified: false,
+            },
+          },
+        }),
       },
     });
 

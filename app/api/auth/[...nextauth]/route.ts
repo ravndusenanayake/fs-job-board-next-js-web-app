@@ -20,18 +20,30 @@ export const authOptions: NextAuthOptions = {
 
         const user = await prisma.user.findUnique({
           where: { email: credentials.email },
+          include: { recruiter: true },
         });
-
+ 
         if (!user || !user.password) {
           throw new Error("No user found with this email");
         }
-
+ 
+        // Check if user is a recruiter and if they are approved
+        if (user.role === "RECRUITER") {
+          if (!user.recruiter) {
+            throw new Error("Recruiter profile not found. Please contact support.");
+          }
+          
+          if (user.recruiter.verificationStatus !== "Approved") {
+            throw new Error("Your account is pending approval from an administrator.");
+          }
+        }
+ 
         const isValid = await bcrypt.compare(credentials.password, user.password);
-
+ 
         if (!isValid) {
           throw new Error("Incorrect password");
         }
-
+ 
         return {
           id: user.id,
           email: user.email,
