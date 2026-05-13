@@ -1,6 +1,3 @@
-import { redirect } from 'next/navigation';
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import AdminSidebar from '@/components/AdminSidebar';
 
 export default async function AdminLayout({
@@ -8,11 +5,7 @@ export default async function AdminLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const session = await getServerSession(authOptions);
-
-  if (!session || (session.user as any).role !== 'ADMIN') {
-    redirect('/');
-  }
+  // Authentication checks have been temporarily disabled per user request
 
   return (
     <div className="flex min-h-screen bg-gray-50 text-gray-900 font-sans">
