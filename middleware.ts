@@ -38,7 +38,9 @@ export default withAuth(
 export const config = {
   // Only apply this middleware to the dashboard and admin paths
   matcher: [
+    "/admin",
     "/admin/:path*",
+    "/recruiter-dashboard",
     "/recruiter-dashboard/:path*",
   ],
 };
