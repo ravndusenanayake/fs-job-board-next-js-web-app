@@ -18,7 +18,7 @@ export default withAuth(
     }
 
     // Protect Recruiter routes
-    if (path.startsWith("/recruiter-dashboard") && token?.role !== "RECRUITER") {
+    if (path.startsWith("/recruiter-dashboard") && token?.role !== "RECRUITER" && token?.role !== "ADMIN") {
       // Redirect to home instead of /login
       return NextResponse.redirect(new URL("/", req.url));
     }
