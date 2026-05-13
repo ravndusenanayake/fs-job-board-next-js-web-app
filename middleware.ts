@@ -11,8 +11,11 @@ export default withAuth(
     
     // If they ARE logged in, we check their role:
     
-    // Admin route protection has been temporarily disabled per user request
-
+    // Protect Admin routes
+    if (path.startsWith("/admin") && token?.role !== "ADMIN") {
+      // Redirect to home instead of /login to avoid infinite loops
+      return NextResponse.redirect(new URL("/", req.url));
+    }
 
     // Protect Recruiter routes
     if (path.startsWith("/recruiter-dashboard") && token?.role !== "RECRUITER") {
@@ -33,8 +36,9 @@ export default withAuth(
 );
 
 export const config = {
-  // Only apply this middleware to the dashboard paths
+  // Only apply this middleware to the dashboard and admin paths
   matcher: [
+    "/admin/:path*",
     "/recruiter-dashboard/:path*",
   ],
 };
