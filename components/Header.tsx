@@ -28,8 +28,8 @@ export default function Header() {
           </nav>
           
           <div className={styles.actions}>
-            <Link href="#" className={styles.signIn}>Sign In</Link>
-            <Link href="#" className="btn-primary">Post a Job</Link>
+            <Link href="/login" className={styles.signIn}>Sign In</Link>
+            <Link href="/signup" className="btn-primary">Sign Up</Link>
           </div>
         </div>
         

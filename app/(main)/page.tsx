@@ -26,7 +26,7 @@ export default async function Home() {
               <Link href="/jobs" className="btn-primary">
                 Explore Jobs
               </Link>
-              <Link href="#" className="btn-secondary">
+              <Link href="/signup" className="btn-secondary">
                 Upload Resume
               </Link>
             </div>
@@ -123,7 +123,7 @@ export default async function Home() {
           <div className={styles.ctaBox}>
             <h2>Ready to start your journey?</h2>
             <p>Join hundreds of students who have already found their dream roles.</p>
-            <Link href="#" className={styles.ctaButton}>
+            <Link href="/signup" className={styles.ctaButton}>
               Create Your Profile
             </Link>
           </div>
