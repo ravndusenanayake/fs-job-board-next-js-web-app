@@ -38,16 +38,17 @@ export default function LoginPage() {
 
         // Role-Based Redirects
         if (role === "ADMIN") {
-          router.push("/admin/jobs");
+          window.location.href = "/admin/jobs";
         } else if (role === "RECRUITER") {
-          router.push("/recruiter-dashboard");
+          window.location.href = "/recruiter-dashboard";
         } else {
-          router.push("/");
+          window.location.href = "/";
         }
-        router.refresh();
       } catch (err) {
         console.error("Session fetch error:", err);
-        router.push("/");
+        window.location.href = "/";
+      } finally {
+        setLoading(false);
       }
     }
   };
